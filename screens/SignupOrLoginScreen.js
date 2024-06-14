@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Colors from '../constants/colors';
 
 const SignupOrLoginScreen = () => {
   return (
@@ -14,9 +15,9 @@ const SignupOrLoginScreen = () => {
       
       <Text style={styles.label}>ou</Text>
       
-      <TextInput style={styles.input} placeholder="Nome" />
-      <TextInput style={styles.input} placeholder="Email" />
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry={true} />
+      <TextInput style={styles.input} placeholder="Nome" placeholderTextColor="#888" />
+      <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#888" />
+      <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#888" secureTextEntry={true} />
       
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Criar conta</Text>
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#5DB075',
+    backgroundColor: Colors.primary500,
     padding: 15,
     borderRadius: 5,
     marginBottom: 20,
@@ -62,16 +63,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
+    color: '#888',
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5,
+    borderColor: '#E8E8E8',
     padding: 10,
     marginBottom: 20,
     width: '100%',
-    height: 50
+    height: 50,
+    backgroundColor: '#F6F6F6'
   },
   link: {
-    color: '#5DB075',
+    color: Colors.primary500,
     textDecorationLine: 'underline',
   },
   icon: {
