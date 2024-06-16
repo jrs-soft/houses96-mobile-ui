@@ -1,36 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import * as Google from 'expo-auth-session/providers/google';
-import * as AuthSession from 'expo-auth-session';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from '../constants/colors';
-import Constants from 'expo-constants';
 
-export default function SignupOrLoginScreen({ navigation }) {
+export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cadastre-se ou realize Login</Text>
+      <Text style={styles.title}>Login</Text>
       
-      <TouchableOpacity style={styles.button}>
-        <Icon name="google" size={20} color="white" style={styles.icon} />
-        <Text style={styles.buttonText}>Continue com Google</Text>
-      </TouchableOpacity>
-      
-      <Text style={styles.label}>ou</Text>
-      
-      <TextInput style={styles.input} placeholder="Nome" placeholderTextColor="#888" />
       <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#888" />
       <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#888" secureTextEntry={true} />
       
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Criar conta</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Main')}>
+        <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
       
-      <Text style={styles.label}>Já possui uma conta?  
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.link}>Login</Text>
-        </TouchableOpacity>
-      </Text>
+      <Text style={styles.link}>Esqueceu sua senha?</Text>
     </View>
   );
 };
@@ -84,7 +68,6 @@ const styles = StyleSheet.create({
   link: {
     color: Colors.primary500,
     textDecorationLine: 'underline',
-    paddingLeft: 5
   },
   icon: {
     marginRight: 10, // Add margin to the right of the icon
