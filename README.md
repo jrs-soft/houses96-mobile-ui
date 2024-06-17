@@ -40,7 +40,7 @@ npm install
 - In the project directory, run:
 
 ```
-expo start
+npm start
 ```
 - This will start the Expo development server and open the Expo Developer Tools in your browser.
 
