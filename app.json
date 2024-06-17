@@ -18,11 +18,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.houses96.houses96mobileui",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": ["exp", "https"]
+    "scheme": [
+      "exp",
+      "https"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "bef4a59d-9ee0-40b8-92c0-740449db2395"
+      }
+    }
   }
 }

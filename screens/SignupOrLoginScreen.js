@@ -9,7 +9,7 @@ import Constants from 'expo-constants';
 export default function SignupOrLoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cadastre-se ou realize Login</Text>
+      <Text style={styles.title}>Realize Login ou Cadastre-se</Text>
       
       <TouchableOpacity style={styles.button}>
         <Icon name="google" size={20} color="white" style={styles.icon} />
