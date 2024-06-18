@@ -52,9 +52,15 @@ npm start
 ## Running the App on iOS Simulator or Android Emulator
 - iOS Simulator
     - Ensure you have Xcode installed on your Mac.
+    ```
+    npx expo run:ios
+    ```
     - In the Expo Developer Tools, click on the "Run on iOS simulator" button
 - Android Emulator
     - Ensure you have Android Studio installed and an Android Virtual Device (AVD) configured.
+    ```
+    npx expo run:android
+    ```
     - In the Expo Developer Tools, click on the "Run on Android device/emulator" button.
 
 ## Reloading the App
