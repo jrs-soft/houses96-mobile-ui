@@ -8,6 +8,14 @@ node_modules/
 dist/
 web-build/
 
+# ios
+ios/build
+ios/Pods
+
+# android
+android/.gradle
+android/app/build
+
 # Native
 *.orig.*
 *.jks
