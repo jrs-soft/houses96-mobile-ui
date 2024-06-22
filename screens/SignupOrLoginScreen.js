@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from '../constants/colors';
+import { GOOGLE_SIGNIN } from '../constants/constants';
 
 
 export default function SignupOrLoginScreen({ navigation }) {
-  
+  const [errorMessage, setErrorMessage] = useState('');
+
   GoogleSignin.configure({
-    androidClientId: '667042151528-aaufcddbmt736nee5gopg91je0rlg46v.apps.googleusercontent.com',
-    iosClientId:'667042151528-089p54n7asdpbqr5t2dirgog19o12nai.apps.googleusercontent.com'
+    androidClientId: GOOGLE_SIGNIN.androidClientId,
+    iosClientId: GOOGLE_SIGNIN.iosClientId
   });
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export default function SignupOrLoginScreen({ navigation }) {
       try {
         await GoogleSignin.hasPlayServices();
       } catch (error) {
-        console.error('Play services error:', error);
+        setErrorMessage('Erro Play services: ' + error.message);
       }
     };
     init();
@@ -27,25 +29,27 @@ export default function SignupOrLoginScreen({ navigation }) {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log('User Info:', userInfo);
+      console.log('Successfully logged. User Info:', userInfo);
+      navigation.navigate('Main');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User cancelled the login process');
+        setErrorMessage('Usuário cancelou o processo de login');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Signin in progress');
+        console.log('Signin em progresso');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Play services not available or outdated');
+        setErrorMessage('Play services não disponível ou desatualizado');
       } else {
-        console.error('Some other error:', error);
+        setErrorMessage('Algum outro erro: ' + error);
       }
     }
   };
   
-  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Realize Login ou Cadastre-se</Text>      
-      
+
+      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+
       <TouchableOpacity style={styles.button} onPress={signIn}>
         <Icon name="google" size={20} color="white" style={styles.icon} />
         <Text style={styles.buttonText}>Continue com Google</Text>
@@ -123,5 +127,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10, // Add margin to the right of the icon
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 20,
+    textAlign: 'center',
   },
 });
