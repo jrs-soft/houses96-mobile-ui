@@ -45,8 +45,7 @@ export default function SignupOrLoginScreen({ navigation }) {
   };
   
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Realize Login ou Cadastre-se</Text>      
+    <View style={styles.container}>      
 
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 

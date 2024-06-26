@@ -1,26 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/colors';
 
 const MainScreen = () => {
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+        <TextInput 
+          style={styles.input}
+          placeholder="Para onde?"
+        />
         <TouchableOpacity>
-          <Text>Voltar</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Houses96</Text>
-        <TouchableOpacity>
-          <Text>Filtro</Text>
+          <Text style={styles.link}>Filtro</Text>
         </TouchableOpacity>
       </View>
-
-      {/* Search Input */}
-      <TextInput 
-        style={styles.input}
-        placeholder="Para onde?"
-      />
 
       {/* Image */}
       <Image 
@@ -68,29 +63,29 @@ const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 10,  // This padding affects all children, so you might not need extra margin on the image
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-  },
-  headerText: {
-    fontWeight: 'bold',
+    marginBottom: 10, // Ensures space below the header
   },
   input: {
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 20,
     padding: 10,
-    marginTop: 20,
-    marginBottom: 20,
+    flex: 1,
+    marginRight: 10,
   },
   image: {
-    width: '100%',
+    width: '95%',
     height: 400,
     borderRadius: 20,
+    marginBottom: 10,
+    marginLeft: 10
   },
   infoContainer: {
     flexDirection: 'row',
@@ -117,7 +112,12 @@ const styles = StyleSheet.create({
   },
   footerButton: {
     alignItems: 'center',
-  }
+  },
+  link: {
+    color: Colors.primary500,
+    textDecorationLine: 'underline',
+    paddingLeft: 5
+  },
 });
 
 export default MainScreen;

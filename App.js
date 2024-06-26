@@ -12,11 +12,50 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignupOrLogin">
-        <Stack.Screen name="SignupOrLogin" component={SignupOrLoginScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen
+          name="SignupOrLogin"
+          component={SignupOrLoginScreen}
+          options={{
+            title: 'Realize Login ou Cadastre-se',
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              textAlign: 'center',
+              alignSelf: 'center'
+            },
+            headerTitleAlign: 'center'
+          }}
+        />
+        <Stack.Screen 
+          name="Login" 
+          component={LoginScreen} 
+          options={{
+            title: 'Login',
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              textAlign: 'center',
+              alignSelf: 'center'
+            },
+            headerTitleAlign: 'center'
+          }}
+        />
+        <Stack.Screen 
+          name="Main" 
+          component={MainScreen} 
+          options={{
+            title: 'Houses96',
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              textAlign: 'center',
+              alignSelf: 'center'
+            },
+            headerTitleAlign: 'center'
+          }}
+        />
       </Stack.Navigator>
-  </NavigationContainer>
+    </NavigationContainer>
   );
 };
 

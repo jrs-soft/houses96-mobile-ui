@@ -5,7 +5,6 @@ import Colors from '../constants/colors';
 export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
       
       <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#888" />
       <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#888" secureTextEntry={true} />
