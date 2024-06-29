@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignupOrLoginScreen from './screens/SignupOrLoginScreen';
 import LoginScreen from './screens/LoginScreen';
 import MainScreen from './screens/MainScreen';
+import Header from './components/Header';
 
 const Stack = createStackNavigator();
 
@@ -44,14 +45,8 @@ const App = () => {
           name="Main" 
           component={MainScreen} 
           options={{
-            title: 'Houses96',
-            headerTintColor: '#000',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              textAlign: 'center',
-              alignSelf: 'center'
-            },
-            headerTitleAlign: 'center'
+            headerTitle: () => <Header/>,
+            headerLeft: null
           }}
         />
       </Stack.Navigator>

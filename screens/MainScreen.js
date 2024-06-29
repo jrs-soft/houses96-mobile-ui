@@ -6,16 +6,6 @@ import Colors from '../constants/colors';
 const MainScreen = () => {
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TextInput 
-          style={styles.input}
-          placeholder="Para onde?"
-        />
-        <TouchableOpacity>
-          <Text style={styles.link}>Filtro</Text>
-        </TouchableOpacity>
-      </View>
 
       {/* Image */}
       <Image 
@@ -65,25 +55,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,  // This padding affects all children, so you might not need extra margin on the image
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    marginBottom: 10, // Ensures space below the header
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 20,
-    padding: 10,
-    flex: 1,
-    marginRight: 10,
-  },
   image: {
     width: '95%',
     height: 400,
     borderRadius: 20,
+    marginTop: 10,
     marginBottom: 10,
     marginLeft: 10
   },
