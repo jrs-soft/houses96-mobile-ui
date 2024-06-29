@@ -1,22 +1,27 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Assuming you're using Ionicons for icons
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { Entypo } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const Header = () => {
   return (
     <View style={styles.container}>
       {/* Left side: User profile icon */}
-      <TouchableOpacity style={styles.leftIconContainer}>
-        <Ionicons name="person-circle-outline" size={24} color="#000" />
+      <TouchableOpacity style={styles.leftTextContainer}>
+        <Text style={styles.title}>Houses96</Text>
       </TouchableOpacity>
       
       {/* Right side icons: Search and Messages */}
       <View style={styles.rightIconsContainer}>
         <TouchableOpacity>
-          <Ionicons name="search-outline" size={24} color="#000" />
+          <AntDesign name="search1" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
-          <Ionicons name="mail-outline" size={24} color="#000" />
+        <Feather name="message-circle" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconContainer}>
+          <Entypo name="dots-three-vertical" size={24} color="black" />
         </TouchableOpacity>
       </View>
     </View>
@@ -32,14 +37,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%'
     },
-    leftIconContainer: {
-        paddingHorizontal: 2,
-      },
+    title: {
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+    leftTextContainer: {
+      paddingHorizontal: 2,
+    },
     rightIconsContainer: {
         flexDirection: 'row'
     },
     iconContainer: {
-        paddingLeft: 8,
+        paddingLeft: 20,
     }
 });
 
