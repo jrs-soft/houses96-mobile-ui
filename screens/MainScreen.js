@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import { FontAwesome } from '@expo/vector-icons';
@@ -57,21 +57,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,  // This padding affects all children, so you might not need extra margin on the image
-    backgroundColor: '#fff'
+    backgroundColor: '#f5f5f5',
+    borderTopColor: Colors.gray2,
+    borderTopWidth: 1
   },
   image: {
     width: '95%',
-    height: '73%',
+    height: Platform.OS === 'ios' ? '71%': '70%',
     borderRadius: 20,
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 10
+    marginLeft: 10,
+    borderWidth: 1,
+    borderColor: Colors.gray2,
   },
   infoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.gray2,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    margin: 10
   },
   infoText: {
     flex: 1,
@@ -91,10 +100,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#fff',
     borderTopWidth: 1,
-    borderColor: Colors.gray1,  
+    borderColor: Colors.gray2,  
     paddingVertical: 10,
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 20 : 0,
     left: 0,
     right: 0,
   },

@@ -14,7 +14,7 @@ const Header = () => {
       
       {/* Right side icons: Search and Messages */}
       <View style={styles.rightIconsContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.iconContainer}>
           <AntDesign name="search1" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 40,
         backgroundColor: '#fff',
-        width: '100%'
+        width: '100%',
     },
     title: {
       fontWeight: 'bold',
@@ -45,10 +45,11 @@ const styles = StyleSheet.create({
       paddingHorizontal: 2,
     },
     rightIconsContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     iconContainer: {
-        paddingLeft: 20,
+      marginLeft: 20,
+      right: -6
     }
 });
 
