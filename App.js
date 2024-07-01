@@ -42,9 +42,11 @@ const App = () => {
           }}
         />
         <Stack.Screen 
+          
           name="Main" 
           component={MainScreen} 
           options={{
+            headerTitleStyle: {borderWidth: 1},
             headerTitle: () => <Header/>,
             headerLeft: null
           }}
