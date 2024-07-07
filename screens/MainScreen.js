@@ -1,21 +1,51 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import Carousel from 'react-native-reanimated-carousel';
+
+const { width: screenWidth } = Dimensions.get('window');
+
+const data = [
+  {
+    title: 'Item 1',
+    text: 'Text 1',
+    image: 'https://static.ffx.io/images/$zoom_0.7%2C$multiply_2.709%2C$ratio_1.5%2C$width_756%2C$x_25%2C$y_1/t_crop_custom/q_62%2Cf_auto/386db6fc83fdc5fa8448609acf6fee156420533c',
+  },
+  {
+    title: 'Item 2',
+    text: 'Text 2',
+    image: 'https://media.istockphoto.com/id/533236170/pt/foto/maresias.jpg?s=1024x1024&w=is&k=20&c=dDUg14Qymu0M2g4cn0dywuEjBPAb4sV9LXKXK3XvSxI=',
+  },
+  {
+    title: 'Item 3',
+    text: 'Text 3',
+    image: 'https://media.istockphoto.com/id/1370813651/pt/foto/surfboard-and-palm-tree-on-beach-in-summer.jpg?s=1024x1024&w=is&k=20&c=FW9UBRdDPgiwTjd4ZnlqN0Zbn7NZnINvwr2wkH5jfVM=',
+  },
+];
 
 const MainScreen = () => {
   return (
     <View style={styles.container}>
 
-      {/* Image */}
-      <Image 
-        source={{ uri: 'https://static.ffx.io/images/$zoom_0.7%2C$multiply_2.709%2C$ratio_1.5%2C$width_756%2C$x_25%2C$y_1/t_crop_custom/q_62%2Cf_auto/386db6fc83fdc5fa8448609acf6fee156420533c' }}
-        style={styles.image}
-      />
-
+      {/* Carousel */}
+      <View style={styles.carouselContainer}>
+        <Carousel
+          loop
+          width={screenWidth}
+          height={'100%'}
+          autoPlay={true}
+          data={data}
+          scrollAnimationDuration={1000}
+          renderItem={({ item }) => (
+            <Image source={{ uri: item.image }} style={styles.image} />
+          )}
+        />
+      </View>
+      
       {/* Info Container */}
       <View style={styles.infoContainer}>
         <View style={styles.infoText}>
@@ -56,22 +86,26 @@ const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,  // This padding affects all children, so you might not need extra margin on the image
     backgroundColor: '#f5f5f5',
-    borderTopColor: Colors.gray2,
-    borderTopWidth: 1
+    justifyContent: 'flex-start',  // Align children at the top
+  },
+  carouselContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginLeft: 40,
+    marginBottom: 10,
+    alignSelf: 'center',
+    height: Platform.OS === 'ios' ? '70%' : '65.8%',
   },
   image: {
-    width: '95%',
-    height: Platform.OS === 'ios' ? '71%': '70%',
+    width: screenWidth * 0.9,
+    height: Platform.OS === 'ios' ? '70%' : '100%',
     borderRadius: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
     borderWidth: 1,
     borderColor: Colors.gray2,
   },
   infoContainer: {
+    width: '90%',  // Make the infoContainer full width
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -80,13 +114,20 @@ const styles = StyleSheet.create({
     borderColor: Colors.gray2,
     backgroundColor: '#fff',
     borderRadius: 20,
-    margin: 10
+    marginTop: 10,  // Space between carousel and infoContainer
+    alignSelf: 'center',
   },
   infoText: {
     flex: 1,
   },
   title: {
+    fontSize: 20,
     fontWeight: 'bold',
+    marginTop: 10,
+  },
+  text: {
+    fontSize: 16,
+    color: '#888',
   },
   rating: {
     flexDirection: 'row',

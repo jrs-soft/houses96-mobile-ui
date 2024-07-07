@@ -9,6 +9,8 @@ import Header from './components/Header';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import HostingScreen from './screens/HostingScreen';
+import 'react-native-gesture-handler';
+
 
 const Stack = createStackNavigator();
 
