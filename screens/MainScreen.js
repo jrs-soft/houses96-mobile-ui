@@ -27,7 +27,7 @@ const data = [
   },
 ];
 
-const MainScreen = () => {
+const MainScreen = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const renderPagination = () => {
@@ -56,7 +56,12 @@ const MainScreen = () => {
           height={'100%'}
           data={data}
           renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate('Detail', { item })}
+            >
             <Image source={{ uri: item.image }} style={styles.image} />
+          </TouchableOpacity>
           )}
           onSnapToItem={(index) => setActiveIndex(index)}
         />

@@ -6,6 +6,8 @@ import SignupOrLoginScreen from './screens/SignupOrLoginScreen';
 import LoginScreen from './screens/LoginScreen';
 import MainScreen from './screens/MainScreen';
 import Header from './components/Header';
+import HeaderDetail from './components/HeaderDetail';
+import DetailScreen from './screens/DetailScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import HostingScreen from './screens/HostingScreen';
@@ -56,6 +58,14 @@ const App = () => {
             headerLeft: null
           }}
         />
+        <Stack.Screen 
+          name="Detail" 
+          component={DetailScreen}
+          options={{
+            headerTitleStyle: {borderWidth: 1},
+            headerTitle: () => <HeaderDetail/>
+          }}
+          />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Configurações" component={SettingsScreen} />
         <Stack.Screen name="Hosting" component={HostingScreen} />

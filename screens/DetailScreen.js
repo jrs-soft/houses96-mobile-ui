@@ -1,0 +1,167 @@
+import React, { useRef } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/colors';
+import Carousel from 'react-native-reanimated-carousel';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const { width: screenWidth } = Dimensions.get('window');
+
+const MainScreen = () => {
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const carouselRef = useRef(null);
+
+  const data = [
+    { number: 1, image: 'https://static.ffx.io/images/$zoom_0.7%2C$multiply_2.709%2C$ratio_1.5%2C$width_756%2C$x_25%2C$y_1/t_crop_custom/q_62%2Cf_auto/386db6fc83fdc5fa8448609acf6fee156420533c' },
+    { number: 2, image: 'https://media.istockphoto.com/id/533236170/pt/foto/maresias.jpg?s=1024x1024&w=is&k=20&c=dDUg14Qymu0M2g4cn0dywuEjBPAb4sV9LXKXK3XvSxI=' },
+    { number: 3, image: 'https://media.istockphoto.com/id/1370813651/pt/foto/surfboard-and-palm-tree-on-beach-in-summer.jpg?s=1024x1024&w=is&k=20&c=FW9UBRdDPgiwTjd4ZnlqN0Zbn7NZnINvwr2wkH5jfVM=' },
+  ];
+
+  const handleNext = () => {
+    if (currentIndex < data.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      carouselRef.current?.scrollTo({ index: newIndex, animated: true });
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      carouselRef.current?.scrollTo({ index: newIndex, animated: true });
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+
+      {/* Carousel */}
+      <View style={styles.carouselContainer}>
+        <Carousel
+          ref={carouselRef}
+          width={screenWidth}
+          height={'100%'}
+          data={data}
+          renderItem={({ item }) => (
+            <Image source={{ uri: item.image }} style={styles.image} />
+          )}
+          onSnapToItem={(index) => setCurrentIndex(index)}
+        />
+        <View style={styles.navigationRow}>
+          <TouchableOpacity onPress={handlePrev} style={styles.navButton}>
+            <Icon name="navigate-before" size={24} color="#fff" />
+          </TouchableOpacity>
+          <Text style={styles.paginationText}>
+            {currentIndex + 1} of {data.length}
+          </Text>
+          <TouchableOpacity onPress={handleNext} style={styles.navButton}>
+            <Icon name="navigate-next" size={24} color="#fff" />
+          </TouchableOpacity>
+        </View>
+
+        
+      </View>
+      {/* Info Container */}
+      <View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+            <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
+            <Text>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
+            <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
+            <View style={styles.rating}>
+              <Ionicons name="star" size={20} color="black" />
+              <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
+            </View>
+          </View>
+        </View>
+
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'flex-start',  // Align children at the top
+  },
+  carouselContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginLeft: 40,
+    marginBottom: 10,
+    alignSelf: 'center',
+    height: Platform.OS === 'ios' ? '65%' : '65.8%',
+  },
+  image: {
+    width: screenWidth * 0.9,
+    height: '100%',
+    borderRadius: 20,
+    borderColor: Colors.gray2,
+    borderWidth: 1
+  },
+  infoContainer: {
+    width: '90%',  // Make the infoContainer full width
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.gray2,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    marginTop: 10,  // Space between carousel and infoContainer
+    alignSelf: 'center',
+  },
+  infoText: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  text: {
+    fontSize: 16,
+    color: '#888',
+  },
+  rating: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    marginLeft: 8,
+  },
+  footerButton: {
+    alignItems: 'center',
+  },
+  link: {
+    color: Colors.primary500,
+    textDecorationLine: 'underline',
+    paddingLeft: 5
+  },
+  navigationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    left: -20
+  },
+  paginationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000', // White text for contrast
+    marginHorizontal: 10,
+  },
+  navButton: {
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black with transparency
+  },
+  navButtonText: {
+    fontSize: 16,
+    color: '#fff', // White text for contrast
+  },
+});
+
+export default MainScreen;
