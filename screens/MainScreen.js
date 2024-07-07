@@ -28,22 +28,39 @@ const data = [
 ];
 
 const MainScreen = () => {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const renderPagination = () => {
+    return (
+      <View style={styles.pagination}>
+        {data.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.dot,
+              { opacity: index === activeIndex ? 1 : 0.5 },
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
 
       {/* Carousel */}
       <View style={styles.carouselContainer}>
         <Carousel
-          loop
           width={screenWidth}
           height={'100%'}
-          autoPlay={true}
           data={data}
-          scrollAnimationDuration={1000}
           renderItem={({ item }) => (
             <Image source={{ uri: item.image }} style={styles.image} />
           )}
+          onSnapToItem={(index) => setActiveIndex(index)}
         />
+        {renderPagination()}
       </View>
       
       {/* Info Container */}
@@ -95,14 +112,15 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginBottom: 10,
     alignSelf: 'center',
-    height: Platform.OS === 'ios' ? '70%' : '65.8%',
+    height: Platform.OS === 'ios' ? '65%' : '65.8%',
   },
   image: {
     width: screenWidth * 0.9,
-    height: Platform.OS === 'ios' ? '70%' : '100%',
+    height: '100%',
     borderRadius: 20,
-    borderWidth: 1,
     borderColor: Colors.gray2,
+    borderWidth: 1    
+
   },
   infoContainer: {
     width: '90%',  // Make the infoContainer full width
@@ -155,6 +173,21 @@ const styles = StyleSheet.create({
     color: Colors.primary500,
     textDecorationLine: 'underline',
     paddingLeft: 5
+  },
+  pagination: {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'center', // Center horizontally
+    alignItems: 'center',
+    width: 60, // Ensure the pagination container takes the full width
+    left: -20
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'black',
+    margin: 5,
   },
 });
 
