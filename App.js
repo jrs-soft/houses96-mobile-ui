@@ -1,77 +1,78 @@
-import 'react-native-gesture-handler';
-import React from 'react';
+import { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import SignupOrLoginScreen from './screens/SignupOrLoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar';
+
 import LoginScreen from './screens/LoginScreen';
-import MainScreen from './screens/MainScreen';
-import Header from './components/Header';
-import HeaderDetail from './components/HeaderDetail';
-import DetailScreen from './screens/DetailScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import HostingScreen from './screens/HostingScreen';
-import 'react-native-gesture-handler';
+import SignupScreen from './screens/SignupScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+import { Colors } from './constants/styles';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
+import IconButton from './components/ui/IconButton';
 
+const Stack = createNativeStackNavigator();
 
-const Stack = createStackNavigator();
+function AuthStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+    </Stack.Navigator>
+  );
+}
 
-const App = () => {
+function AuthenticatedStack() {
+  const authCtx = useContext(AuthContext);
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{
+          headerRight: ({ tintColor }) => (
+            <IconButton
+              icon="exit"
+              color={tintColor}
+              size={24}
+              onPress={authCtx.logout}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function Navigation() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignupOrLogin">
-        <Stack.Screen
-          name="SignupOrLogin"
-          component={SignupOrLoginScreen}
-          options={{
-            title: 'Realize Login ou Cadastre-se',
-            headerTintColor: '#000',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              textAlign: 'center',
-              alignSelf: 'center'
-            },
-            headerTitleAlign: 'center'
-          }}
-        />
-        <Stack.Screen 
-          name="Login" 
-          component={LoginScreen} 
-          options={{
-            title: 'Login',
-            headerTintColor: '#000',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              textAlign: 'center',
-              alignSelf: 'center'
-            },
-            headerTitleAlign: 'center'
-          }}
-        />
-        <Stack.Screen 
-          
-          name="Main" 
-          component={MainScreen} 
-          options={{
-            headerTitleStyle: {borderWidth: 1},
-            headerTitle: () => <Header/>,
-            headerLeft: null
-          }}
-        />
-        <Stack.Screen 
-          name="Detail" 
-          component={DetailScreen}
-          options={{
-            headerTitleStyle: {borderWidth: 1},
-            headerTitle: () => <HeaderDetail/>
-          }}
-          />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Configurações" component={SettingsScreen} />
-        <Stack.Screen name="Hosting" component={HostingScreen} />
-      </Stack.Navigator>
+      {!authCtx.isAuthenticated && <AuthStack />}
+      {authCtx.isAuthenticated && <AuthenticatedStack />}
     </NavigationContainer>
   );
-};
+}
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <StatusBar style="light" />
+      <AuthContextProvider>
+        <Navigation />
+      </AuthContextProvider>
+    </>
+  );
+}
