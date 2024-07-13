@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
 
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
@@ -11,6 +11,9 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import { Colors } from './constants/styles';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
 import IconButton from './components/ui/IconButton';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
@@ -70,7 +73,6 @@ function Navigation() {
 
 function Root() {
   const [isTryingLogin, setIsTryingLogin] = useState(true);
-
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
@@ -82,20 +84,22 @@ function Root() {
       }
 
       setIsTryingLogin(false);
+
+      // Tell the splash screen to hide
+      await SplashScreen.hideAsync();
     }
 
     fetchToken();
   }, []);
 
   if (isTryingLogin) {
-    return <AppLoading />;
+    return null; // Don't render anything while trying to log in
   }
 
   return <Navigation />;
 }
 
 export default function App() {
-  
   return (
     <>
       <StatusBar style="light" />
