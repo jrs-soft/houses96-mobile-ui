@@ -7,10 +7,16 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
+import MainScreen from './screens/MainScreen';
 import { Colors } from './constants/styles';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
-import IconButton from './components/ui/IconButton';
+import Header from './components/Header';
+import DetailScreen from './screens/DetailScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import HostingScreen from './screens/HostingScreen';
+import HeaderDetail from './components/HeaderDetail';
+
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -27,7 +33,7 @@ function AuthStack() {
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Cadastre-se" component={SignupScreen} />
     </Stack.Navigator>
   );
 }
@@ -43,19 +49,25 @@ function AuthenticatedStack() {
       }}
     >
       <Stack.Screen
-        name="Welcome"
-        component={WelcomeScreen}
+        name="Main"
+        component={MainScreen}
         options={{
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor}
-              size={24}
-              onPress={authCtx.logout}
-            />
-          ),
+          headerTitleStyle: {borderWidth: 1},
+          headerTitle: () => <Header/>,
+          headerLeft: null
         }}
       />
+      <Stack.Screen 
+          name="Detail" 
+          component={DetailScreen}
+          options={{
+            headerTitleStyle: {borderWidth: 1},
+            headerTitle: () => <HeaderDetail/>
+          }}
+      />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Configurações" component={SettingsScreen} />
+      <Stack.Screen name="Hosting" component={HostingScreen} />
     </Stack.Navigator>
   );
 }

@@ -7,13 +7,13 @@ const HeaderDetail = () => {
     <View style={styles.container}>
       <View style={styles.rightIconsContainer}>
         <TouchableOpacity style={styles.iconContainer}>
-          <AntDesign name="like2" size={24} color="black" />
+          <AntDesign name="like2" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
-          <AntDesign name="dislike2" size={24} color="black" />
+          <AntDesign name="dislike2" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainerLast}>
-          <AntDesign name="sharealt" size={24} color="black" />
+          <AntDesign name="sharealt" size={24} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 40,
-    backgroundColor: '#fff',
-    width: '100%',
+    width: '90%',
     paddingHorizontal: 10,
   },
   rightIconsContainer: {
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   },
   iconContainerLast: {
     marginLeft: 7,
-    right: -12
+    right: -8
   },
 });
 

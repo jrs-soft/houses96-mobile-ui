@@ -55,7 +55,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         />
         {!isLogin && (
           <Input
-            label="Confirme seu Email"
+            label="Confirme seu email"
             onUpdateValue={updateInputValueHandler.bind(this, 'confirmEmail')}
             value={enteredConfirmEmail}
             keyboardType="email-address"
@@ -71,7 +71,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         />
         {!isLogin && (
           <Input
-            label="Confirme a Senha"
+            label="Confirme a senha"
             onUpdateValue={updateInputValueHandler.bind(
               this,
               'confirmPassword'
@@ -96,5 +96,5 @@ export default AuthForm;
 const styles = StyleSheet.create({
   buttons: {
     marginTop: 12,
-  },
+  }
 });
