@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
-    color: 'white',
+    color: '#5db075',
+    fontWeight: 'bold',
     marginBottom: 4,
   },
   labelInvalid: {

@@ -40,7 +40,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
       !passwordIsValid ||
       (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
     ) {
-      Alert.alert('Invalid input', 'Please check your entered credentials.');
+      Alert.alert('Dados inválidos', 'Por favor, verifique suas credenciais.');
       setCredentialsInvalid({
         email: !emailIsValid,
         confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -61,7 +61,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
       />
       <View style={styles.buttons}>
         <FlatButton onPress={switchAuthModeHandler}>
-          {isLogin ? 'Create a new user' : 'Log in instead'}
+          {isLogin ? 'Cadastrar novo usuário' : 'Login'}
         </FlatButton>
       </View>
     </View>
@@ -84,6 +84,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   buttons: {
-    marginTop: 8,
-  },
+    marginTop: 8, 
+  }
 });
