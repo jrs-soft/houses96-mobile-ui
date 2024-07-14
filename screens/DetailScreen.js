@@ -4,10 +4,11 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import Carousel from 'react-native-reanimated-carousel';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const MainScreen = () => {
+const DetailScreen = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const carouselRef = useRef(null);
 
@@ -35,7 +36,6 @@ const MainScreen = () => {
 
   return (
     <View style={styles.container}>
-
       {/* Carousel */}
       <View style={styles.carouselContainer}>
         <Carousel
@@ -52,29 +52,42 @@ const MainScreen = () => {
           <TouchableOpacity onPress={handlePrev} style={styles.navButton}>
             <Icon name="navigate-before" size={24} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.paginationText}>
-            {currentIndex + 1} of {data.length}
-          </Text>
+          <TouchableOpacity style={styles.paginationContainer}>
+            <Text style={styles.paginationText}>
+              {currentIndex + 1} of {data.length}
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleNext} style={styles.navButton}>
             <Icon name="navigate-next" size={24} color="#fff" />
           </TouchableOpacity>
         </View>
-
-        
       </View>
       {/* Info Container */}
       <View style={styles.infoContainer}>
-          <View style={styles.infoText}>
-            <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
-            <Text>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
-            <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
-            <View style={styles.rating}>
-              <Ionicons name="star" size={20} color="black" />
-              <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
-            </View>
+        <View style={styles.infoText}>
+          <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
+          <Text>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
+          <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
+          <View style={styles.rating}>
+            <Ionicons name="star" size={20} color="black" />
+            <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
+          </View>
+          {/* New Elements */}
+          <View style={styles.separator} />
+          <View style={styles.userInfo}>
+            <Ionicons name="person" size={20} color="black" />
+            <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={20} color="black" /> - 35 avaliações</Text>
+          </View>
+          <View style={styles.additionalInfo}>
+            <MaterialIcons name="emoji-events" size={20} color="black" />
+            <Text style={styles.additionalInfoText}>Superhost - hospeda a 9 meses</Text>
+          </View>
+          <View style={styles.additionalInfo}>
+            <MaterialIcons name="cancel" size={20} color="black" />
+            <Text style={styles.additionalInfoText}>Cancelamento gratuito por 48 horas</Text>
           </View>
         </View>
-
+      </View>
     </View>
   );
 };
@@ -83,12 +96,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    justifyContent: 'flex-start',  // Align children at the top
+    justifyContent: 'flex-start', // Align children at the top
   },
   carouselContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginLeft: 40,
     marginBottom: 10,
     alignSelf: 'center',
     height: Platform.OS === 'ios' ? '65%' : '65.8%',
@@ -98,10 +110,40 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 20,
     borderColor: Colors.gray2,
-    borderWidth: 1
+    borderWidth: 1,
+    alignSelf: 'center', // Center the image horizontally
+  },
+  navigationRow: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '90%',
+    paddingHorizontal: 10,
+    top: '90%', // Center vertically
+    transform: [{ translateY: -12 }], // Adjust for button size
+  },
+  paginationContainer: {
+    borderRadius: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black with transparency
+    padding: 10,
+  },
+  paginationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff', // White text for contrast
+  },
+  navButton: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black with transparency
+  },
+  navButtonText: {
+    fontSize: 16,
+    color: '#fff', // White text for contrast
   },
   infoContainer: {
-    width: '90%',  // Make the infoContainer full width
+    width: '90%', // Make the infoContainer full width
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -110,7 +152,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.gray2,
     backgroundColor: '#fff',
     borderRadius: 20,
-    marginTop: 10,  // Space between carousel and infoContainer
+    marginTop: 10, // Space between carousel and infoContainer
     alignSelf: 'center',
   },
   infoText: {
@@ -138,30 +180,31 @@ const styles = StyleSheet.create({
   link: {
     color: Colors.primary500,
     textDecorationLine: 'underline',
-    paddingLeft: 5
+    paddingLeft: 5,
   },
-  navigationRow: {
+  separator: {
+    height: 1,
+    backgroundColor: '#ccc',
+    marginVertical: 8,
+  },
+  userInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
-    left: -20
+    marginTop: 8,
   },
-  paginationText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000', // White text for contrast
-    marginHorizontal: 10,
+  userInfoText: {
+    marginLeft: 4,
+    fontSize: 14,
   },
-  navButton: {
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black with transparency
+  additionalInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
   },
-  navButtonText: {
-    fontSize: 16,
-    color: '#fff', // White text for contrast
+  additionalInfoText: {
+    marginLeft: 4,
+    fontSize: 14,
   },
 });
 
-export default MainScreen;
+export default DetailScreen;
