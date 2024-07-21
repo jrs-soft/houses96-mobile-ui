@@ -81,9 +81,9 @@ const DetailScreen = () => {
         <View style={styles.infoContainer}>
           <View style={styles.infoText}>
             <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
-            <Text>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
+            <Text style={{ marginTop: 10, marginBottom: 10 }}>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
             <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
-            <View style={styles.rating}>
+            <View style={[styles.rating, { marginTop: 10 }]}>
               <Ionicons name="star" size={20} color="black" />
               <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
             </View>
@@ -91,7 +91,7 @@ const DetailScreen = () => {
             <View style={styles.separator} />
             <View style={styles.userInfo}>
               <Ionicons name="person" size={20} color="black" />
-              <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={20} color="black" /> - 35 avaliações</Text>
+              <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={16} color="black" /> - 35 avaliações</Text>
             </View>
             <View style={styles.additionalInfo}>
               <MaterialIcons name="emoji-events" size={20} color="black" />
@@ -104,10 +104,10 @@ const DetailScreen = () => {
           </View>
         </View>
         {/* Info Container 2 */}
-        <View style={styles.infoContainer}>
+        {/*<View style={styles.infoContainer}>
           <View style={styles.infoText}>
             <Text style={styles.title}>Comodidades</Text>
-            {/* New Elements */}
+            {/* New Elements
             <View style={styles.separator} />
             <View style={styles.additionalInfo}>
               <MaterialCommunityIcons name="wave" size={24} color="black" />
@@ -121,19 +121,65 @@ const DetailScreen = () => {
               <Text style={[styles.link, { alignSelf: 'flex-end' }]}>Ver todas as 10 Comodidades</Text>
             </View>
           </View>
-        </View>
+        </View>*/}
         {/* Info Container 3 */}
-        <View style={styles.infoContainerMap}>
+        {/*<View style={styles.infoContainerMap}>
           <View style={styles.infoTextMap}>
             <Text style={styles.titleMap}>Localização no Mapa</Text>
+            <View style={styles.separator} />
             <Text style={{ marginBottom: 15 }}>Belém, Pará, Brasil</Text>
             <View style={styles.containerMap}>
               <MapView
                 style={styles.map}
                 initialRegion={region}
               >
-                <Marker coordinate={marker} title="Teste" />
+                <Marker coordinate={marker} />
               </MapView>
+            </View>
+          </View>
+        </View>*/}
+        {/* Info Container 4 */}
+        {/*<View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+            <Text style={styles.title}>Comentários</Text>
+            <View style={styles.separator} />
+            <View style={styles.rating}>
+              <Ionicons name="star" size={16} color="black" />
+              <Ionicons name="star" size={16} color="black" />
+              <Ionicons name="star" size={16} color="black" />
+              <Ionicons name="star" size={16} color="black" />
+              <Ionicons name="star" size={16} color="black" />
+              <Text style={{ marginLeft: 8 }}>Há dois meses</Text>
+            </View>
+            <Text style={styles.commentText}>
+              Passamos ótimos momentos em família na casa. A vista é linda, a praia em frente também.
+            </Text>
+            <View style={styles.userInfo}>
+              <Ionicons name="person" size={20} color="black" />
+              <Text style={styles.userInfoText}>Paola Silva</Text>
+            </View>
+            <Text style={{marginTop: 10}}>São Caetano do Sul</Text>
+            <View style={styles.additionalInfo}>
+              <Text style={styles.link}>Ver todos os 10 Comentários</Text>
+            </View>
+          </View>
+        </View>*/}
+        {/* Info Container 5 */}
+        <View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+            <Text style={styles.title}>Anfitrião e Coanfitrião</Text>
+            <View style={styles.separator} />
+            <View style={styles.list}>
+              <Text style={styles.listItem}>Taxa de resposta: 100%</Text>
+              <Text style={styles.listItem}>Responde em até uma hora</Text>
+            </View>
+            <Text style={styles.title2}>Coanfitriã</Text>
+            <View style={styles.userInfo}>
+              <Ionicons name="person" size={20} color="black" />
+              <Text style={styles.userInfoText}>Paola Silva</Text>
+            </View>
+            <View style={styles.additionalInfo}>
+              <Text style={styles.link}>Enviar mensagem para o Anfitrião</Text>
             </View>
           </View>
         </View>
@@ -203,6 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 20,
     marginTop: 10, // Space between carousel and infoContainer
+    marginBottom: 10,
     alignSelf: 'center',
   },
   infoText: {
@@ -212,6 +259,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
+  },
+  title2: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   text: {
     fontSize: 16,
@@ -283,7 +334,7 @@ const styles = StyleSheet.create({
   containerMap: {
     height: 300, // Fixed height for the map
     width: screenWidth - 62,
-    borderRadius: 8,
+    borderRadius: 20,
     overflow: 'hidden',
   },
   map: {
@@ -292,6 +343,18 @@ const styles = StyleSheet.create({
   link: {
     color: Colors.primary500,
     textDecorationLine: 'underline',
+  },
+  commentText: {
+    marginTop: 10,
+    marginBottom: 10
+  },
+  list: {
+    padding: 10,
+  },
+  listItem: {
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
 });
 
