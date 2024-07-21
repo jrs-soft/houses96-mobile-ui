@@ -196,17 +196,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    justifyContent: 'flex-start', // Align children at the top
+    //justifyContent: 'flex-start', // Align children at the top
+  },
+  outerContainer: {
+    flex: 1,
   },
   scrollViewContent: {
+    flexGrow: 1,
     minHeight: Dimensions.get('window').height,
-    justifyContent: 'center', // Optional: Center the content vertically
   },
   innerContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: 'lightgrey',
   },
   carouselContainer: {
     alignItems: 'center',

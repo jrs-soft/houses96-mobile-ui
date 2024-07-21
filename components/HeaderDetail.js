@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   iconContainerLast: {
     marginLeft: 7,
-    right: Platform.OS === 'ios' ? 2 : 8,
+    right: Platform.OS === 'ios' ? 2 : -8,
   },
 });
 
