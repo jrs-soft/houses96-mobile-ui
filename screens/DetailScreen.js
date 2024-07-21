@@ -49,62 +49,64 @@ const DetailScreen = () => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        {/* Carousel */}
-        <View style={styles.carouselContainer}>
-          <Carousel
-            ref={carouselRef}
-            width={screenWidth}
-            height={'100%'}
-            data={data}
-            renderItem={({ item }) => (
-              <Image source={{ uri: item.image }} style={styles.image} />
-            )}
-            onSnapToItem={(index) => setCurrentIndex(index)}
-          />
-          <View style={styles.navigationRow}>
-            <TouchableOpacity onPress={handlePrev} style={styles.navButton}>
-              <Icon name="navigate-before" size={24} color="#fff" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.paginationContainer}>
-              <Text style={styles.paginationText}>
-                {currentIndex + 1} of {data.length}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleNext} style={styles.navButton}>
-              <Icon name="navigate-next" size={24} color="#fff" />
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* Info Container 1 */}
-        <View style={styles.infoContainer}>
-          <View style={styles.infoText}>
-            <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
-            <Text style={{ marginTop: 10, marginBottom: 10 }}>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
-            <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
-            <View style={[styles.rating, { marginTop: 10 }]}>
-              <Ionicons name="star" size={20} color="black" />
-              <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
-            </View>
-            {/* New Elements */}
-            <View style={styles.separator} />
-            <View style={styles.userInfo}>
-              <Ionicons name="person" size={20} color="black" />
-              <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={16} color="black" /> - 35 avaliações</Text>
-            </View>
-            <View style={styles.additionalInfo}>
-              <MaterialIcons name="emoji-events" size={20} color="black" />
-              <Text style={styles.additionalInfoText}>Superhost - hospeda a 9 meses</Text>
-            </View>
-            <View style={styles.additionalInfo}>
-              <MaterialIcons name="cancel" size={20} color="black" />
-              <Text style={styles.additionalInfoText}>Cancelamento gratuito por 48 horas</Text>
+
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.innerContainer}>
+          {/* Carousel */}
+          <View style={styles.carouselContainer}>
+            <Carousel
+              ref={carouselRef}
+              width={screenWidth}
+              height={'100%'}
+              data={data}
+              renderItem={({ item }) => (
+                <Image source={{ uri: item.image }} style={styles.image} />
+              )}
+              onSnapToItem={(index) => setCurrentIndex(index)}
+            />
+            <View style={styles.navigationRow}>
+              <TouchableOpacity onPress={handlePrev} style={styles.navButton}>
+                <Icon name="navigate-before" size={24} color="#fff" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.paginationContainer}>
+                <Text style={styles.paginationText}>
+                  {currentIndex + 1} of {data.length}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleNext} style={styles.navButton}>
+                <Icon name="navigate-next" size={24} color="#fff" />
+              </TouchableOpacity>
             </View>
           </View>
-        </View>
-        {/* Info Container 2 */}
-        {/*<View style={styles.infoContainer}>
+          {/* Info Container 1 */}
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
+              <Text style={{ marginTop: 10, marginBottom: 10 }}>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
+              <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
+              <View style={[styles.rating, { marginTop: 10 }]}>
+                <Ionicons name="star" size={20} color="black" />
+                <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
+              </View>
+              {/* New Elements */}
+              <View style={styles.separator} />
+              <View style={styles.userInfo}>
+                <Ionicons name="person" size={20} color="black" />
+                <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={16} color="black" /> - 35 avaliações</Text>
+              </View>
+              <View style={styles.additionalInfo}>
+                <MaterialIcons name="emoji-events" size={20} color="black" />
+                <Text style={styles.additionalInfoText}>Superhost - hospeda a 9 meses</Text>
+              </View>
+              <View style={styles.additionalInfo}>
+                <MaterialIcons name="cancel" size={20} color="black" />
+                <Text style={styles.additionalInfoText}>Cancelamento gratuito por 48 horas</Text>
+              </View>
+            </View>
+          </View>
+          {/* Info Container 2 */}
+          {/*<View style={styles.infoContainer}>
           <View style={styles.infoText}>
             <Text style={styles.title}>Comodidades</Text>
             {/* New Elements
@@ -122,8 +124,8 @@ const DetailScreen = () => {
             </View>
           </View>
         </View>*/}
-        {/* Info Container 3 */}
-        {/*<View style={styles.infoContainerMap}>
+          {/* Info Container 3 */}
+          {/*<View style={styles.infoContainerMap}>
           <View style={styles.infoTextMap}>
             <Text style={styles.titleMap}>Localização no Mapa</Text>
             <View style={styles.separator} />
@@ -138,8 +140,8 @@ const DetailScreen = () => {
             </View>
           </View>
         </View>*/}
-        {/* Info Container 4 */}
-        {/*<View style={styles.infoContainer}>
+          {/* Info Container 4 */}
+          {/*<View style={styles.infoContainer}>
           <View style={styles.infoText}>
             <Text style={styles.title}>Comentários</Text>
             <View style={styles.separator} />
@@ -164,27 +166,29 @@ const DetailScreen = () => {
             </View>
           </View>
         </View>*/}
-        {/* Info Container 5 */}
-        <View style={styles.infoContainer}>
-          <View style={styles.infoText}>
-            <Text style={styles.title}>Anfitrião e Coanfitrião</Text>
-            <View style={styles.separator} />
-            <View style={styles.list}>
-              <Text style={styles.listItem}>Taxa de resposta: 100%</Text>
-              <Text style={styles.listItem}>Responde em até uma hora</Text>
-            </View>
-            <Text style={styles.title2}>Coanfitriã</Text>
-            <View style={styles.userInfo}>
-              <Ionicons name="person" size={20} color="black" />
-              <Text style={styles.userInfoText}>Paola Silva</Text>
-            </View>
-            <View style={styles.additionalInfo}>
-              <Text style={styles.link}>Enviar mensagem para o Anfitrião</Text>
+          {/* Info Container 5 */}
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Anfitrião e Coanfitrião</Text>
+              <View style={styles.separator} />
+              <View style={styles.list}>
+                <Text style={styles.listItem}>Taxa de resposta: 100%</Text>
+                <Text style={styles.listItem}>Responde em até uma hora</Text>
+              </View>
+              <Text style={styles.title2}>Coanfitriã</Text>
+              <View style={styles.userInfo}>
+                <Ionicons name="person" size={20} color="black" />
+                <Text style={styles.userInfoText}>Paola Silva</Text>
+              </View>
+              <View style={styles.additionalInfo}>
+                <Text style={styles.link}>Enviar mensagem para o Anfitrião</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
+
   );
 };
 
@@ -193,6 +197,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
     justifyContent: 'flex-start', // Align children at the top
+  },
+  scrollViewContent: {
+    minHeight: Dimensions.get('window').height,
+    justifyContent: 'center', // Optional: Center the content vertically
+  },
+  innerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   carouselContainer: {
     alignItems: 'center',
@@ -239,7 +253,7 @@ const styles = StyleSheet.create({
     color: '#fff', // White text for contrast
   },
   infoContainer: {
-    width: '90%', // Make the infoContainer full width
+    width: '100%', // Make the infoContainer full width
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -259,6 +273,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
+    marginBottom: 10
   },
   title2: {
     fontSize: 16,
@@ -286,7 +301,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#ccc',
-    marginVertical: 8,
+    marginVertical: 8
   },
   userInfo: {
     flexDirection: 'row',
