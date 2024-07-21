@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Platform, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import { FontAwesome } from '@expo/vector-icons';
@@ -28,7 +28,21 @@ const data = [
 ];
 
 const MainScreen = ({ navigation }) => {
+  const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const handlePress = (item) => {
+    // Navigate to the detail screen
+    navigation.navigate('Detail', { item });
+  };
+
+  const handleLongPress = (index) => {
+    // Move to the next item in the carousel
+    const nextIndex = index + 1;
+    if (carouselRef.current && nextIndex < data.length) {
+      carouselRef.current.snapToItem(nextIndex);
+    }
+  };
 
   const renderPagination = () => {
     return (
@@ -52,22 +66,25 @@ const MainScreen = ({ navigation }) => {
       {/* Carousel */}
       <View style={styles.carouselContainer}>
         <Carousel
+          ref={carouselRef}
           width={screenWidth}
           height={'100%'}
           data={data}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => navigation.navigate('Detail', { item })}
-            >
-            <Image source={{ uri: item.image }} style={styles.image} />
-          </TouchableOpacity>
+          renderItem={({ item, index }) => (
+            <TouchableWithoutFeedback onLongPress={() => handleLongPress(index)}>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => handlePress(item)}
+              >
+                <Image source={{ uri: item.image }} style={styles.image} />
+              </TouchableOpacity>
+            </TouchableWithoutFeedback>
           )}
           onSnapToItem={(index) => setActiveIndex(index)}
         />
         {renderPagination()}
       </View>
-      
+
       {/* Info Container */}
       <View style={styles.infoContainer}>
         <View style={styles.infoText}>
@@ -85,11 +102,11 @@ const MainScreen = ({ navigation }) => {
       {/* Footer */}
       <View style={styles.footer}>
         <TouchableOpacity style={styles.footerButton}>
-        <FontAwesome name="commenting-o" size={24} color="black" />
+          <FontAwesome name="commenting-o" size={24} color="black" />
           <Text>Comentar (12)</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.footerButton}>
-        <AntDesign name="dislike2" size={24} color="black" />
+          <AntDesign name="dislike2" size={24} color="black" />
           <Text>Não Gostei (12)</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.footerButton}>
@@ -124,7 +141,7 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 20,
     borderColor: Colors.gray2,
-    borderWidth: 1    
+    borderWidth: 1
 
   },
   infoContainer: {
@@ -164,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#fff',
     borderTopWidth: 1,
-    borderColor: Colors.gray2,  
+    borderColor: Colors.gray2,
     paddingVertical: 10,
     position: 'absolute',
     bottom: Platform.OS === 'ios' ? 20 : 0,

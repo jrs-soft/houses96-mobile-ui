@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const HeaderDetail = () => {
   return (
     <View style={styles.container}>
       <View style={styles.rightIconsContainer}>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity>
           <AntDesign name="like2" size={24} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconDislike}>
           <AntDesign name="dislike2" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainerLast}>
@@ -32,12 +32,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 'auto',
   },
-  iconContainer: {
+  iconDislike: {
     marginLeft: 20,
+    marginRight: 16
   },
   iconContainerLast: {
     marginLeft: 7,
-    right: -8
+    right: Platform.OS === 'ios' ? 2 : 8,
   },
 });
 

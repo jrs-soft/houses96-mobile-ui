@@ -62,7 +62,8 @@ function AuthenticatedStack() {
           component={DetailScreen}
           options={{
             headerTitleStyle: {borderWidth: 1},
-            headerTitle: () => <HeaderDetail/>
+            headerTitle: () => <HeaderDetail/>,
+            headerBackTitleVisible: false
           }}
       />
       <Stack.Screen name="Profile" component={ProfileScreen} />

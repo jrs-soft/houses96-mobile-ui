@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginLeft: 20,
-    right: -4,
+    right: Platform.OS === 'ios' ? 9 : -4,
   },
   popoverContent: {
     width: 200, // Adjust the width for Android

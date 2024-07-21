@@ -1,16 +1,30 @@
 import React, { useRef } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import Carousel from 'react-native-reanimated-carousel';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MaterialIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView, { Marker } from 'react-native-maps';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 const DetailScreen = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const carouselRef = useRef(null);
+
+  const region = {
+    latitude: -0.010123,
+    longitude: -51.067145,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+
+  const marker = {
+    latitude: -0.010123,
+    longitude: -51.067145,
+  };
 
   const data = [
     { number: 1, image: 'https://static.ffx.io/images/$zoom_0.7%2C$multiply_2.709%2C$ratio_1.5%2C$width_756%2C$x_25%2C$y_1/t_crop_custom/q_62%2Cf_auto/386db6fc83fdc5fa8448609acf6fee156420533c' },
@@ -35,60 +49,96 @@ const DetailScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Carousel */}
-      <View style={styles.carouselContainer}>
-        <Carousel
-          ref={carouselRef}
-          width={screenWidth}
-          height={'100%'}
-          data={data}
-          renderItem={({ item }) => (
-            <Image source={{ uri: item.image }} style={styles.image} />
-          )}
-          onSnapToItem={(index) => setCurrentIndex(index)}
-        />
-        <View style={styles.navigationRow}>
-          <TouchableOpacity onPress={handlePrev} style={styles.navButton}>
-            <Icon name="navigate-before" size={24} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.paginationContainer}>
-            <Text style={styles.paginationText}>
-              {currentIndex + 1} of {data.length}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleNext} style={styles.navButton}>
-            <Icon name="navigate-next" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/* Info Container */}
-      <View style={styles.infoContainer}>
-        <View style={styles.infoText}>
-          <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
-          <Text>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
-          <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
-          <View style={styles.rating}>
-            <Ionicons name="star" size={20} color="black" />
-            <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
-          </View>
-          {/* New Elements */}
-          <View style={styles.separator} />
-          <View style={styles.userInfo}>
-            <Ionicons name="person" size={20} color="black" />
-            <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={20} color="black" /> - 35 avaliações</Text>
-          </View>
-          <View style={styles.additionalInfo}>
-            <MaterialIcons name="emoji-events" size={20} color="black" />
-            <Text style={styles.additionalInfoText}>Superhost - hospeda a 9 meses</Text>
-          </View>
-          <View style={styles.additionalInfo}>
-            <MaterialIcons name="cancel" size={20} color="black" />
-            <Text style={styles.additionalInfoText}>Cancelamento gratuito por 48 horas</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        {/* Carousel */}
+        <View style={styles.carouselContainer}>
+          <Carousel
+            ref={carouselRef}
+            width={screenWidth}
+            height={'100%'}
+            data={data}
+            renderItem={({ item }) => (
+              <Image source={{ uri: item.image }} style={styles.image} />
+            )}
+            onSnapToItem={(index) => setCurrentIndex(index)}
+          />
+          <View style={styles.navigationRow}>
+            <TouchableOpacity onPress={handlePrev} style={styles.navButton}>
+              <Icon name="navigate-before" size={24} color="#fff" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.paginationContainer}>
+              <Text style={styles.paginationText}>
+                {currentIndex + 1} of {data.length}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNext} style={styles.navButton}>
+              <Icon name="navigate-next" size={24} color="#fff" />
+            </TouchableOpacity>
           </View>
         </View>
+        {/* Info Container 1 */}
+        <View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+            <Text style={styles.title}>Casa do Didigo - Praia Particular</Text>
+            <Text>Espaço inteiro: casa em Angra dos Reis, Brasil</Text>
+            <Text>10 hóspedes - 3 quartos - 7 camas - 3 banheiros</Text>
+            <View style={styles.rating}>
+              <Ionicons name="star" size={20} color="black" />
+              <Text style={styles.ratingText}>4.8 - 25 avaliações</Text>
+            </View>
+            {/* New Elements */}
+            <View style={styles.separator} />
+            <View style={styles.userInfo}>
+              <Ionicons name="person" size={20} color="black" />
+              <Text style={styles.userInfoText}>Anfitrião: Pedro - 4,89 <Ionicons name="star" size={20} color="black" /> - 35 avaliações</Text>
+            </View>
+            <View style={styles.additionalInfo}>
+              <MaterialIcons name="emoji-events" size={20} color="black" />
+              <Text style={styles.additionalInfoText}>Superhost - hospeda a 9 meses</Text>
+            </View>
+            <View style={styles.additionalInfo}>
+              <MaterialIcons name="cancel" size={20} color="black" />
+              <Text style={styles.additionalInfoText}>Cancelamento gratuito por 48 horas</Text>
+            </View>
+          </View>
+        </View>
+        {/* Info Container 2 */}
+        <View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+            <Text style={styles.title}>Comodidades</Text>
+            {/* New Elements */}
+            <View style={styles.separator} />
+            <View style={styles.additionalInfo}>
+              <MaterialCommunityIcons name="wave" size={24} color="black" />
+              <Text style={styles.additionalInfoText}>Vista para o Oceano</Text>
+            </View>
+            <View style={styles.additionalInfo}>
+              <MaterialIcons name="terrain" size={24} color="black" />
+              <Text style={styles.additionalInfoText}>Vista para as Montanhas</Text>
+            </View>
+            <View style={styles.additionalInfo}>
+              <Text style={[styles.link, { alignSelf: 'flex-end' }]}>Ver todas as 10 Comodidades</Text>
+            </View>
+          </View>
+        </View>
+        {/* Info Container 3 */}
+        <View style={styles.infoContainerMap}>
+          <View style={styles.infoTextMap}>
+            <Text style={styles.titleMap}>Localização no Mapa</Text>
+            <Text style={{ marginBottom: 15 }}>Belém, Pará, Brasil</Text>
+            <View style={styles.containerMap}>
+              <MapView
+                style={styles.map}
+                initialRegion={region}
+              >
+                <Marker coordinate={marker} title="Teste" />
+              </MapView>
+            </View>
+          </View>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -204,6 +254,44 @@ const styles = StyleSheet.create({
   additionalInfoText: {
     marginLeft: 4,
     fontSize: 14,
+  },
+  infoContainerMap: {
+    flex: 1,
+    padding: 16,
+
+    width: '90%', // Make the infoContainer full width
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.gray2,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    marginTop: 10, // Space between carousel and infoContainer
+    alignSelf: 'center',
+
+  },
+  infoTextMap: {
+    marginBottom: 16,
+  },
+  titleMap: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  containerMap: {
+    height: 300, // Fixed height for the map
+    width: screenWidth - 62,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  link: {
+    color: Colors.primary500,
+    textDecorationLine: 'underline',
   },
 });
 
