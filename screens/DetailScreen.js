@@ -41,6 +41,7 @@ const DetailScreen = () => {
   };
 
   const handlePrev = () => {
+    R
     if (currentIndex > 0) {
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
@@ -106,24 +107,24 @@ const DetailScreen = () => {
             </View>
           </View>
           {/* Info Container 2 */}
-          {/*<View style={styles.infoContainer}>
-          <View style={styles.infoText}>
-            <Text style={styles.title}>Comodidades</Text>
-            {/* New Elements
-            <View style={styles.separator} />
-            <View style={styles.additionalInfo}>
-              <MaterialCommunityIcons name="wave" size={24} color="black" />
-              <Text style={styles.additionalInfoText}>Vista para o Oceano</Text>
-            </View>
-            <View style={styles.additionalInfo}>
-              <MaterialIcons name="terrain" size={24} color="black" />
-              <Text style={styles.additionalInfoText}>Vista para as Montanhas</Text>
-            </View>
-            <View style={styles.additionalInfo}>
-              <Text style={[styles.link, { alignSelf: 'flex-end' }]}>Ver todas as 10 Comodidades</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Comodidades</Text>
+              {/* New Elements */}
+              <View style={styles.separator} />
+              <View style={styles.additionalInfo}>
+                <MaterialCommunityIcons name="wave" size={24} color="black" />
+                <Text style={styles.additionalInfoText}>Vista para o Oceano</Text>
+              </View>
+              <View style={styles.additionalInfo}>
+                <MaterialIcons name="terrain" size={24} color="black" />
+                <Text style={styles.additionalInfoText}>Vista para as Montanhas</Text>
+              </View>
+              <View style={styles.additionalInfo}>
+                <Text style={[styles.link, { alignSelf: 'flex-end' }]}>Ver todas as 10 Comodidades</Text>
+              </View>
             </View>
           </View>
-        </View>*/}
           {/* Info Container 3 */}
           {/*<View style={styles.infoContainerMap}>
           <View style={styles.infoTextMap}>
@@ -141,31 +142,31 @@ const DetailScreen = () => {
           </View>
         </View>*/}
           {/* Info Container 4 */}
-          {/*<View style={styles.infoContainer}>
-          <View style={styles.infoText}>
-            <Text style={styles.title}>Comentários</Text>
-            <View style={styles.separator} />
-            <View style={styles.rating}>
-              <Ionicons name="star" size={16} color="black" />
-              <Ionicons name="star" size={16} color="black" />
-              <Ionicons name="star" size={16} color="black" />
-              <Ionicons name="star" size={16} color="black" />
-              <Ionicons name="star" size={16} color="black" />
-              <Text style={{ marginLeft: 8 }}>Há dois meses</Text>
-            </View>
-            <Text style={styles.commentText}>
-              Passamos ótimos momentos em família na casa. A vista é linda, a praia em frente também.
-            </Text>
-            <View style={styles.userInfo}>
-              <Ionicons name="person" size={20} color="black" />
-              <Text style={styles.userInfoText}>Paola Silva</Text>
-            </View>
-            <Text style={{marginTop: 10}}>São Caetano do Sul</Text>
-            <View style={styles.additionalInfo}>
-              <Text style={styles.link}>Ver todos os 10 Comentários</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Comentários</Text>
+              <View style={styles.separator} />
+              <View style={styles.rating}>
+                <Ionicons name="star" size={16} color="black" />
+                <Ionicons name="star" size={16} color="black" />
+                <Ionicons name="star" size={16} color="black" />
+                <Ionicons name="star" size={16} color="black" />
+                <Ionicons name="star" size={16} color="black" />
+                <Text style={{ marginLeft: 8 }}>Há dois meses</Text>
+              </View>
+              <Text style={styles.commentText}>
+                Passamos ótimos momentos em família na casa. A vista é linda, a praia em frente também.
+              </Text>
+              <View style={styles.userInfo}>
+                <Ionicons name="person" size={20} color="black" />
+                <Text style={styles.userInfoText}>Paola Silva</Text>
+              </View>
+              <Text style={{ marginTop: 10 }}>São Caetano do Sul</Text>
+              <View style={styles.additionalInfo}>
+                <Text style={styles.link}>Ver todos os 10 Comentários</Text>
+              </View>
             </View>
           </View>
-        </View>*/}
           {/* Info Container 5 */}
           <View style={styles.infoContainer}>
             <View style={styles.infoText}>
@@ -185,6 +186,52 @@ const DetailScreen = () => {
               </View>
             </View>
           </View>
+          {/* Info Container 6 */}
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Disponibilidade</Text>
+              <View style={styles.separator} />
+              <View style={styles.list}>
+                <Text>22 - 27 de Julho</Text>
+              </View>
+            </View>
+          </View>
+          {/* Info Container 7 */}
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Política de Cancelamento</Text>
+              <View style={styles.separator} />
+              <View style={styles.list}>
+                <Text>Cancelamento gratuito por 48 horas</Text>
+              </View>
+            </View>
+          </View>
+          {/* Info Container 8 */}
+          <View style={styles.infoContainer}>
+            <View style={styles.infoText}>
+              <Text style={styles.title}>Regras da Casa</Text>
+              <View style={styles.separator} />
+              <View style={styles.list}>
+                <Text>Não há alarme de monóxido de carbono</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        {/* Info Container 9 */}
+        <View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+            <Text style={styles.title}>Segurança e Propriedade</Text>
+            <View style={styles.separator} />
+            <View style={styles.list}>
+              <Text>Não há alarme de monóxido de carbono</Text>
+            </View>
+          </View>
+        </View>
+        {/* Info Container 10 */}
+        <View style={styles.infoContainer}>
+          <View style={styles.infoText}>
+              <Text style={[styles.link, {padding: 15, alignSelf: 'center'}]}>Denunciar Anúncio</Text>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -198,26 +245,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     //justifyContent: 'flex-start', // Align children at the top
   },
-  outerContainer: {
-    flex: 1,
-  },
   scrollViewContent: {
     flexGrow: 1,
-    minHeight: Dimensions.get('window').height,
   },
   innerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: 'lightgrey',
+    flex: 1,
   },
   carouselContainer: {
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 10,
     alignSelf: 'center',
-    height: Platform.OS === 'ios' ? '65%' : '65.8%',
+    height: 400, // Adjust height as needed
   },
+  /*carouselContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    alignSelf: 'center',
+    height: Platform.OS === 'ios' ? '65%' : '65.8%',
+  },*/
   image: {
     width: screenWidth * 0.9,
     height: '100%',
@@ -237,7 +284,7 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -12 }], // Adjust for button size
   },
   paginationContainer: {
-    borderRadius: 5,
+    borderRadius: 15,
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black with transparency
     padding: 10,
   },
@@ -248,7 +295,7 @@ const styles = StyleSheet.create({
   },
   navButton: {
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black with transparency
   },
   navButtonText: {
@@ -256,7 +303,7 @@ const styles = StyleSheet.create({
     color: '#fff', // White text for contrast
   },
   infoContainer: {
-    width: '100%', // Make the infoContainer full width
+    width: '90%', // Make the infoContainer full width
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
