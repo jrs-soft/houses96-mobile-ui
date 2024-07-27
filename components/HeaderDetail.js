@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   iconDislike: {
-    marginLeft: 20,
+    marginLeft: 30,
     marginRight: 16
   },
   iconContainerLast: {

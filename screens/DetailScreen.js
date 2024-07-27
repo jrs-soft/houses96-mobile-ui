@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { StyleSheet, ScrollView, View, Text, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Image, Button, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import Carousel from 'react-native-reanimated-carousel';
@@ -7,6 +7,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapView, { Marker } from 'react-native-maps';
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import FlatButton from '../components/ui/FlatButton';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -233,6 +236,16 @@ const DetailScreen = () => {
               <Text style={[styles.link, {padding: 15, alignSelf: 'center'}]}>Denunciar Anúncio</Text>
           </View>
         </View>
+        {/* Footer */}
+      <View style={styles.footer}>
+        <View>
+          <Text style={{fontWeight: 'bold'}}>R$ 184,00 noite</Text>
+          <Text>22 - 27 de julho</Text>
+        </View>
+          <TouchableOpacity style={styles.footerButton} onPress={() => {}}>
+          <Text style={styles.buttonText}>Reservar</Text>
+        </TouchableOpacity>
+      </View>
       </ScrollView>
     </View>
 
@@ -243,7 +256,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    //justifyContent: 'flex-start', // Align children at the top
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -258,13 +270,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 400, // Adjust height as needed
   },
-  /*carouselContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 10,
-    alignSelf: 'center',
-    height: Platform.OS === 'ios' ? '65%' : '65.8%',
-  },*/
   image: {
     width: screenWidth * 0.9,
     height: '100%',
@@ -374,7 +379,6 @@ const styles = StyleSheet.create({
   infoContainerMap: {
     flex: 1,
     padding: 16,
-
     width: '90%', // Make the infoContainer full width
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -386,7 +390,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 10, // Space between carousel and infoContainer
     alignSelf: 'center',
-
   },
   infoTextMap: {
     marginBottom: 16,
@@ -420,6 +423,27 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  footer: {
+    marginTop: Platform.OS === 'ios' ? 30 : 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderColor: Colors.gray2,
+    padding: 20,
+    bottom: Platform.OS === 'ios' ? 20 : 0,
+  },
+  footerButton: {
+    backgroundColor: Colors.primary500,
+    padding: 10,
+    borderRadius: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
