@@ -1,5 +1,6 @@
 import React, { useState, useRef, useContext } from 'react';
-import { Modal, Text, View, TouchableOpacity, StyleSheet, Platform, TextInput, FlatList } from 'react-native';
+import { Modal, View, StyleSheet, FlatList, TouchableOpacity, Platform } from 'react-native';
+import { TextInput, Card, Text, Provider as PaperProvider } from 'react-native-paper';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -7,30 +8,40 @@ import Popover from 'react-native-popover-view';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../store/auth-context';
 import DatePicker from 'react-native-date-picker';
+import Colors from '../constants/colors';
 
 const Header = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [guestsModalVisible, setGuestsModalVisible] = useState(false);
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isEndDatePickerOpen, setIsEndDatePickerOpen] = useState(false);
-  const [rooms, setRooms] = useState(1);
-  const [adults, setAdults] = useState(1);
+  const [rooms, setRooms] = useState(0);
+  const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const touchableRef = useRef();
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
 
+  // Full list of locations (can be fetched from an API)
+  const fullLocationList = [
+    { id: '1', name: 'New York' },
+    { id: '2', name: 'Los Angeles' },
+    { id: '3', name: 'Chicago' },
+    { id: '4', name: 'Houston' },
+    { id: '5', name: 'Miami' },
+    { id: '6', name: 'San Francisco' },
+    { id: '7', name: 'Boston' },
+    { id: '8', name: 'Seattle' },
+    { id: '9', name: 'Washington' },
+    // Add more locations as needed
+  ];
+
   const toggleModal = () => {
     setModalVisible(!modalVisible);
-  };
-
-  const toggleGuestsModal = () => {
-    setGuestsModalVisible(!guestsModalVisible);
   };
 
   const togglePopover = () => {
@@ -54,26 +65,37 @@ const Header = () => {
 
   const handleInputChange = (text) => {
     setQuery(text);
-    // Simulating an API call
-    setSuggestions([
-      { id: '1', name: 'Location 1' },
-      { id: '2', name: 'Location 2' },
-      { id: '3', name: 'Location 3' },
-    ]);
+    if (text) {
+      const filteredSuggestions = fullLocationList.filter((location) =>
+        location.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelectSuggestion = (name) => {
+    setQuery(name);
+    setSuggestions([]);
   };
 
   const renderSuggestionItem = ({ item }) => (
-    <TouchableOpacity onPress={() => setQuery(item.name)}>
-      <Text style={styles.suggestionItem}>{item.name}</Text>
+    <TouchableOpacity onPress={() => handleSelectSuggestion(item.name)}>
+      <Card style={styles.suggestionItem}>
+        <Card.Content>
+          <Text>{item.name}</Text>
+        </Card.Content>
+      </Card>
     </TouchableOpacity>
   );
 
   const clearFilters = () => {
     setQuery('');
-    setStartDate(new Date());
-    setEndDate(new Date());
-    setRooms(1);
-    setAdults(1);
+    setStartDate(null);
+    setEndDate(null);
+    setRooms(0);
+    setAdults(0);
     setChildren(0);
   };
 
@@ -83,181 +105,176 @@ const Header = () => {
     toggleModal(); // Close the modal after search
   };
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.leftTextContainer}>
-        <Text style={styles.title}>Houses96</Text>
-      </TouchableOpacity>
+  const formatDate = (date) => {
+    if (!date) return 'dd/mm/aaaa';
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  };
 
-      <View style={styles.rightIconsContainer}>
-        <TouchableOpacity style={styles.iconContainer} onPress={toggleModal}>
-          <AntDesign name="search1" size={24} color="white" />
+  return (
+    <PaperProvider>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.leftTextContainer}>
+          <Text style={styles.title}>Houses96</Text>
         </TouchableOpacity>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={toggleModal}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <TextInput
-                style={styles.input}
-                placeholder="Para onde?"
-                value={query}
-                onChangeText={handleInputChange}
-              />
-              <FlatList
-                data={suggestions}
-                keyExtractor={(item) => item.id}
-                renderItem={renderSuggestionItem}
-              />
+        <View style={styles.rightIconsContainer}>
+          <TouchableOpacity style={styles.iconContainer} onPress={toggleModal}>
+            <AntDesign name="search1" size={24} color="white" />
+          </TouchableOpacity>
 
-              <View style={styles.dateRow}>
-                <TouchableOpacity onPress={() => setIsDatePickerOpen(true)} style={[styles.dateInput, styles.dateInputLeft]}>
-                  <Text style={styles.dateInputText}>
-                    {startDate ? startDate.toLocaleDateString() : 'Start Date'}
-                  </Text>
-                </TouchableOpacity>
-
-                <DatePicker
-                  modal
-                  open={isDatePickerOpen}
-                  date={startDate}
-                  mode="date"
-                  onConfirm={(date) => {
-                    setIsDatePickerOpen(false);
-                    setStartDate(date);
-                  }}
-                  onCancel={() => {
-                    setIsDatePickerOpen(false);
-                  }}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={toggleModal}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <TextInput
+                  label="Para onde?"
+                  value={query}
+                  onChangeText={handleInputChange}
+                  style={styles.input}
+                />
+                <FlatList
+                  data={suggestions}
+                  keyExtractor={(item) => item.id}
+                  renderItem={renderSuggestionItem}
+                  style={styles.suggestionList}
                 />
 
-                <TouchableOpacity onPress={() => setIsEndDatePickerOpen(true)} style={[styles.dateInput, styles.dateInputRight]}>
-                  <Text style={styles.dateInputText}>
-                    {endDate ? endDate.toLocaleDateString() : 'End Date'}
-                  </Text>
-                </TouchableOpacity>
+                <Text style={[styles.sectionTitle, { marginBottom: 10 }]}>Quando</Text>
+                <View style={styles.dateRow}>
+                  <TouchableOpacity onPress={() => setIsDatePickerOpen(true)} style={[styles.dateInput, styles.dateInputLeft]}>
+                    <Text style={styles.dateInputText}>
+                      {formatDate(startDate) || 'Data inicial'}
+                    </Text>
+                  </TouchableOpacity>
 
-                <DatePicker
-                  modal
-                  open={isEndDatePickerOpen}
-                  date={endDate}
-                  mode="date"
-                  onConfirm={(date) => {
-                    setIsEndDatePickerOpen(false);
-                    setEndDate(date);
-                  }}
-                  onCancel={() => {
-                    setIsEndDatePickerOpen(false);
-                  }}
-                />
-              </View>
+                  <DatePicker
+                    modal
+                    open={isDatePickerOpen}
+                    date={startDate || new Date()}
+                    mode="date"
+                    onConfirm={(date) => {
+                      setIsDatePickerOpen(false);
+                      setStartDate(date);
+                    }}
+                    onCancel={() => {
+                      setIsDatePickerOpen(false);
+                    }}
+                  />
 
-              <TouchableOpacity onPress={toggleGuestsModal} style={styles.guestsButton}>
-                <Text style={styles.guestsButtonText}>Select Guests</Text>
-              </TouchableOpacity>
+                  <TouchableOpacity onPress={() => setIsEndDatePickerOpen(true)} style={[styles.dateInput, styles.dateInputRight]}>
+                    <Text style={styles.dateInputText}>
+                      {formatDate(endDate) || 'Data final'}
+                    </Text>
+                  </TouchableOpacity>
 
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={guestsModalVisible}
-                onRequestClose={toggleGuestsModal}
-              >
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
-                    <View style={styles.guestRow}>
-                      <Text style={styles.guestLabel}>Rooms</Text>
-                      <View style={styles.counter}>
-                        <TouchableOpacity onPress={() => setRooms(Math.max(1, rooms - 1))}>
-                          <Text style={styles.counterButton}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.counterValue}>{rooms}</Text>
-                        <TouchableOpacity onPress={() => setRooms(rooms + 1)}>
-                          <Text style={styles.counterButton}>+</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
+                  <DatePicker
+                    modal
+                    open={isEndDatePickerOpen}
+                    date={endDate || new Date()}
+                    mode="date"
+                    onConfirm={(date) => {
+                      setIsEndDatePickerOpen(false);
+                      setEndDate(date);
+                    }}
+                    onCancel={() => {
+                      setIsEndDatePickerOpen(false);
+                    }}
+                  />
+                </View>
 
-                    <View style={styles.guestRow}>
-                      <Text style={styles.guestLabel}>Adults</Text>
-                      <View style={styles.counter}>
-                        <TouchableOpacity onPress={() => setAdults(Math.max(1, adults - 1))}>
-                          <Text style={styles.counterButton}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.counterValue}>{adults}</Text>
-                        <TouchableOpacity onPress={() => setAdults(adults + 1)}>
-                          <Text style={styles.counterButton}>+</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-
-                    <View style={styles.guestRow}>
-                      <Text style={styles.guestLabel}>Children</Text>
-                      <View style={styles.counter}>
-                        <TouchableOpacity onPress={() => setChildren(Math.max(0, children - 1))}>
-                          <Text style={styles.counterButton}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.counterValue}>{children}</Text>
-                        <TouchableOpacity onPress={() => setChildren(children + 1)}>
-                          <Text style={styles.counterButton}>+</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-
-                    <TouchableOpacity onPress={toggleGuestsModal} style={styles.closeButton}>
-                      <Text style={styles.closeButtonText}>Close</Text>
+                <Text style={styles.sectionTitle}>Quem</Text>
+                <View style={styles.guestRow}>
+                  <Text style={styles.guestLabel}>Quartos</Text>
+                  <View style={styles.counter}>
+                    <TouchableOpacity onPress={() => setRooms(Math.max(0, rooms - 1))} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.counterValue}>{rooms}</Text>
+                    <TouchableOpacity onPress={() => setRooms(rooms + 1)} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>+</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-              </Modal>
 
-              <View style={styles.footer}>
-                <TouchableOpacity onPress={clearFilters}>
-                  <Text style={styles.clearText}>Limpar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={search} style={styles.searchButton}>
-                  <Text style={styles.searchButtonText}>Pesquisar</Text>
-                </TouchableOpacity>
+                <View style={styles.guestRow}>
+                  <Text style={styles.guestLabel}>Adultos</Text>
+                  <View style={styles.counter}>
+                    <TouchableOpacity onPress={() => setAdults(Math.max(0, adults - 1))} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.counterValue}>{adults}</Text>
+                    <TouchableOpacity onPress={() => setAdults(adults + 1)} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.guestRow}>
+                  <Text style={styles.guestLabel}>Crianças</Text>
+                  <View style={styles.counter}>
+                    <TouchableOpacity onPress={() => setChildren(Math.max(0, children - 1))} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.counterValue}>{children}</Text>
+                    <TouchableOpacity onPress={() => setChildren(children + 1)} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.footer}>
+                  <TouchableOpacity onPress={clearFilters}>
+                    <Text style={styles.link}>Limpar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.footerButton} onPress={search}>
+                    <Text style={styles.buttonText}>Pesquisar</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
 
-        <TouchableOpacity style={styles.iconContainer}>
-          <Feather name="message-circle" size={24} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.iconContainer}
-          ref={touchableRef}
-          onPress={togglePopover}
-        >
-          <Entypo name="dots-three-vertical" size={24} color="white" />
-        </TouchableOpacity>
-        <Popover
-          isVisible={isVisible}
-          from={touchableRef}
-          onRequestClose={togglePopover}
-        >
-          <View style={styles.popoverContent}>
-            <TouchableOpacity onPress={navigateToProfile} style={styles.menuItem}>
-              <Text>Perfil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToHosting} style={styles.menuItem}>
-              <Text>Hospedagem</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToSettings} style={styles.menuItem}>
-              <Text>Configurações</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={authCtx.logout} style={styles.menuItem}>
-              <Text>Logout</Text>
-            </TouchableOpacity>
-          </View>
-        </Popover>
+          <TouchableOpacity style={styles.iconContainer}>
+            <Feather name="message-circle" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            ref={touchableRef}
+            onPress={togglePopover}
+          >
+            <Entypo name="dots-three-vertical" size={24} color="white" />
+          </TouchableOpacity>
+          <Popover
+            isVisible={isVisible}
+            from={touchableRef}
+            onRequestClose={togglePopover}
+          >
+            <View style={styles.popoverContent}>
+              <TouchableOpacity onPress={navigateToProfile} style={styles.menuItem}>
+                <Text>Perfil</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={navigateToHosting} style={styles.menuItem}>
+                <Text>Hospedagem</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={navigateToSettings} style={styles.menuItem}>
+                <Text>Configurações</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={authCtx.logout} style={styles.menuItem}>
+                <Text>Logout</Text>
+              </TouchableOpacity>
+            </View>
+          </Popover>
+        </View>
       </View>
-    </View>
+    </PaperProvider>
   );
 };
 
@@ -314,14 +331,20 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
     marginBottom: 10,
   },
+  suggestionList: {
+    width: '100%',
+  },
   suggestionItem: {
-    padding: 10,
+    width: '100%',
+    marginVertical: 5,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+    alignSelf: 'flex-start',
   },
   dateRow: {
     flexDirection: 'row',
@@ -346,18 +369,6 @@ const styles = StyleSheet.create({
   dateInputText: {
     color: '#555',
   },
-  guestsButton: {
-    width: '100%',
-    padding: 10,
-    backgroundColor: '#2196F3',
-    borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  guestsButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
   guestRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -372,24 +383,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  counterCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#2196F3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
   counterButton: {
     fontSize: 20,
-    paddingHorizontal: 10,
     color: '#2196F3',
   },
   counterValue: {
     fontSize: 16,
-    paddingHorizontal: 10,
-  },
-  closeButton: {
-    padding: 10,
-    backgroundColor: 'red',
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  closeButtonText: {
-    color: 'white',
-    fontSize: 16,
+    marginHorizontal: 10,
+    color: '#2196F3',
   },
   footer: {
     flexDirection: 'row',
@@ -398,18 +409,20 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
   },
-  clearText: {
-    color: '#2196F3',
-    fontSize: 16,
+  link: {
+    color: Colors.primary500,
+    textDecorationLine: 'underline',
   },
-  searchButton: {
+  footerButton: {
+    backgroundColor: Colors.primary500,
     padding: 10,
-    backgroundColor: '#2196F3',
-    borderRadius: 5,
+    borderRadius: 15,
   },
-  searchButtonText: {
+  buttonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
