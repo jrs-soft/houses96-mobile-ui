@@ -44,7 +44,6 @@ const DetailScreen = () => {
   };
 
   const handlePrev = () => {
-    R
     if (currentIndex > 0) {
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { Modal, View, StyleSheet, FlatList, TouchableOpacity, Platform } from 'react-native';
+import { Modal, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { TextInput, Card, Text, Provider as PaperProvider } from 'react-native-paper';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Entypo } from '@expo/vector-icons';
@@ -22,11 +22,12 @@ const Header = () => {
   const [rooms, setRooms] = useState(0);
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
+  const [pets, setPets] = useState(0);
+  const [errors, setErrors] = useState({});
   const touchableRef = useRef();
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
 
-  // Full list of locations (can be fetched from an API)
   const fullLocationList = [
     { id: '1', name: 'New York' },
     { id: '2', name: 'Los Angeles' },
@@ -37,7 +38,6 @@ const Header = () => {
     { id: '7', name: 'Boston' },
     { id: '8', name: 'Seattle' },
     { id: '9', name: 'Washington' },
-    // Add more locations as needed
   ];
 
   const toggleModal = () => {
@@ -97,16 +97,31 @@ const Header = () => {
     setRooms(0);
     setAdults(0);
     setChildren(0);
+    setPets(0);
+    setErrors({});
   };
 
   const search = () => {
-    // Implement your search functionality here
+    const newErrors = {};
+    if (!query) newErrors.query = 'Por favor, selecione um destino.';
+    if (!startDate) newErrors.startDate = 'Por favor, selecione a Data inicial.';
+    if (!endDate) newErrors.endDate = 'Por favor, selecione a Data final.';
+    if (startDate && endDate && startDate >= endDate)
+      newErrors.dateRange = 'A Data inicial deve ser menor do que a Data final.';
+    if (rooms <= 0) newErrors.rooms = 'Pelo menos um Quarto deve ser preenchido.';
+    if (adults <= 0) newErrors.adults = 'Pelo menos um Adulto deve ser preenchido.';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     console.log('Search with:', { query, startDate, endDate, rooms, adults, children });
     toggleModal(); // Close the modal after search
   };
 
-  const formatDate = (date) => {
-    if (!date) return 'dd/mm/aaaa';
+  const formatDate = (date, defaultValue) => {
+    if (!date) return defaultValue;
     return date.toLocaleDateString('pt-BR', {
       day: '2-digit',
       month: '2-digit',
@@ -139,6 +154,7 @@ const Header = () => {
                   value={query}
                   onChangeText={handleInputChange}
                   style={styles.input}
+                  theme={{ colors: { primary: Colors.primary500 } }}
                 />
                 <FlatList
                   data={suggestions}
@@ -146,12 +162,13 @@ const Header = () => {
                   renderItem={renderSuggestionItem}
                   style={styles.suggestionList}
                 />
+                {errors.query && <Text style={styles.errorText}>{errors.query}</Text>}
 
                 <Text style={[styles.sectionTitle, { marginBottom: 10 }]}>Quando</Text>
                 <View style={styles.dateRow}>
                   <TouchableOpacity onPress={() => setIsDatePickerOpen(true)} style={[styles.dateInput, styles.dateInputLeft]}>
                     <Text style={styles.dateInputText}>
-                      {formatDate(startDate) || 'Data inicial'}
+                      {formatDate(startDate, 'Data inicial')}
                     </Text>
                   </TouchableOpacity>
 
@@ -171,7 +188,7 @@ const Header = () => {
 
                   <TouchableOpacity onPress={() => setIsEndDatePickerOpen(true)} style={[styles.dateInput, styles.dateInputRight]}>
                     <Text style={styles.dateInputText}>
-                      {formatDate(endDate) || 'Data final'}
+                      {formatDate(endDate, 'Data final')}
                     </Text>
                   </TouchableOpacity>
 
@@ -189,6 +206,9 @@ const Header = () => {
                     }}
                   />
                 </View>
+                {errors.startDate && <Text style={styles.errorText}>{errors.startDate}</Text>}
+                {errors.endDate && <Text style={styles.errorText}>{errors.endDate}</Text>}
+                {errors.dateRange && <Text style={styles.errorText}>{errors.dateRange}</Text>}
 
                 <Text style={styles.sectionTitle}>Quem</Text>
                 <View style={styles.guestRow}>
@@ -203,6 +223,7 @@ const Header = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+                {errors.rooms && <Text style={styles.errorText}>{errors.rooms}</Text>}
 
                 <View style={styles.guestRow}>
                   <Text style={styles.guestLabel}>Adultos</Text>
@@ -216,6 +237,7 @@ const Header = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
+                {errors.adults && <Text style={styles.errorText}>{errors.adults}</Text>}
 
                 <View style={styles.guestRow}>
                   <Text style={styles.guestLabel}>Crianças</Text>
@@ -225,6 +247,19 @@ const Header = () => {
                     </TouchableOpacity>
                     <Text style={styles.counterValue}>{children}</Text>
                     <TouchableOpacity onPress={() => setChildren(children + 1)} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.guestRow}>
+                  <Text style={styles.guestLabel}>Pets</Text>
+                  <View style={styles.counter}>
+                    <TouchableOpacity onPress={() => setPets(Math.max(0, pets - 1))} style={styles.counterCircle}>
+                      <Text style={styles.counterButton}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.counterValue}>{pets}</Text>
+                    <TouchableOpacity onPress={() => setPets(pets + 1)} style={styles.counterCircle}>
                       <Text style={styles.counterButton}>+</Text>
                     </TouchableOpacity>
                   </View>
@@ -242,7 +277,7 @@ const Header = () => {
             </View>
           </Modal>
 
-          <TouchableOpacity style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconMessageContainer}>
             <Feather name="message-circle" size={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
@@ -260,6 +295,9 @@ const Header = () => {
             <View style={styles.popoverContent}>
               <TouchableOpacity onPress={navigateToProfile} style={styles.menuItem}>
                 <Text>Perfil</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={navigateToHosting} style={styles.menuItem}>
+                <Text>Imóveis salvos</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={navigateToHosting} style={styles.menuItem}>
                 <Text>Hospedagem</Text>
@@ -292,14 +330,19 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   leftTextContainer: {
-    right: 3,
+    //right: 1,
+    left: 3
   },
   rightIconsContainer: {
     flexDirection: 'row',
   },
   iconContainer: {
     marginLeft: 20,
-    right: Platform.OS === 'ios' ? 9 : -4,
+    right: 15,
+  },
+  iconMessageContainer: {
+    marginLeft: 27,
+    right: 15,
   },
   popoverContent: {
     width: 200,
@@ -332,6 +375,7 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     marginBottom: 10,
+    backgroundColor: '#dbf4e2',
   },
   suggestionList: {
     width: '100%',
@@ -339,6 +383,7 @@ const styles = StyleSheet.create({
   suggestionItem: {
     width: '100%',
     marginVertical: 5,
+    backgroundColor: '#dbf4e2',
   },
   sectionTitle: {
     fontSize: 18,
@@ -388,19 +433,19 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#2196F3',
+    borderColor: Colors.primary500,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
   },
   counterButton: {
     fontSize: 20,
-    color: '#2196F3',
+    color: Colors.primary500,
   },
   counterValue: {
     fontSize: 16,
     marginHorizontal: 10,
-    color: '#2196F3',
+    color: 'black',
   },
   footer: {
     flexDirection: 'row',
@@ -423,6 +468,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 5,
   },
 });
 
