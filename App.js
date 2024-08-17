@@ -16,6 +16,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import HostingScreen from './screens/HostingScreen';
 import HeaderDetail from './components/HeaderDetail';
+import { Provider } from'react-redux';
+import { store } from'./redux/store';
 
 
 // Keep the splash screen visible while we fetch resources
@@ -117,7 +119,9 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
-        <Root />
+        <Provider store={store}>
+          <Root />
+        </Provider>
       </AuthContextProvider>
     </>
   );

@@ -9,6 +9,8 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../store/auth-context';
 import DatePicker from 'react-native-date-picker';
 import Colors from '../constants/colors';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCityByName } from '../redux/citiesSlice';
 
 const Header = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,18 +29,9 @@ const Header = () => {
   const touchableRef = useRef();
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
-
-  const fullLocationList = [
-    { id: '1', name: 'New York' },
-    { id: '2', name: 'Los Angeles' },
-    { id: '3', name: 'Chicago' },
-    { id: '4', name: 'Houston' },
-    { id: '5', name: 'Miami' },
-    { id: '6', name: 'San Francisco' },
-    { id: '7', name: 'Boston' },
-    { id: '8', name: 'Seattle' },
-    { id: '9', name: 'Washington' },
-  ];
+  const [cityName, setCityName] = useState('');
+  const dispatch = useDispatch();
+  const { city, loading, error } = useSelector((state) => state.cities);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -63,28 +56,34 @@ const Header = () => {
     navigation.navigate('Hosting');
   };
 
-  const handleInputChange = (text) => {
+  handleInputChange = (text) => {
     setQuery(text);
     if (text) {
-      const filteredSuggestions = fullLocationList.filter((location) =>
-        location.name.toLowerCase().includes(text.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
+      dispatch(fetchCityByName(text))
+        .unwrap()
+        .then((cities) => {
+          setSuggestions(cities); // Assuming the response is an array of cities
+        })
+        .catch((error) => {
+          console.error('Error fetching cities:', error);
+          setSuggestions([]); // Clear suggestions on error
+        });
     } else {
       setSuggestions([]);
     }
   };
 
-  const handleSelectSuggestion = (name) => {
-    setQuery(name);
+  const handleSelectSuggestion = (item) => {
+    const selectedLocation = `${item.name}, ${item.state.name}`;
+    setQuery(selectedLocation);
     setSuggestions([]);
   };
 
   const renderSuggestionItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleSelectSuggestion(item.name)}>
+    <TouchableOpacity onPress={() => handleSelectSuggestion(item)}>
       <Card style={styles.suggestionItem}>
         <Card.Content>
-          <Text>{item.name}</Text>
+          <Text>{item.name}, {item.state.name}</Text>
         </Card.Content>
       </Card>
     </TouchableOpacity>
