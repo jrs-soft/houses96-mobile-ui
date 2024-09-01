@@ -241,7 +241,7 @@ const DetailScreen = () => {
           <Text style={{fontWeight: 'bold'}}>R$ 184,00 noite</Text>
           <Text>22 - 27 de julho</Text>
         </View>
-          <TouchableOpacity style={styles.footerButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.footerButton} onPress={() => {}}>
           <Text style={styles.buttonText}>Reservar</Text>
         </TouchableOpacity>
       </View>

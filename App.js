@@ -70,7 +70,7 @@ function AuthenticatedStack() {
       />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Configurações" component={SettingsScreen} />
-      <Stack.Screen name="Hosting" component={HostingScreen} />
+      <Stack.Screen name="Hospedagem" component={HostingScreen} />
     </Stack.Navigator>
   );
 }

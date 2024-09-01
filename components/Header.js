@@ -53,7 +53,7 @@ const Header = () => {
 
   const navigateToHosting = () => {
     setIsVisible(false);
-    navigation.navigate('Hosting');
+    navigation.navigate('Hospedagem');
   };
 
   handleInputChange = (text) => {
