@@ -31,7 +31,7 @@ const HostingScreenStep3 = () => {
           component.types.includes('route')
         );
         const cityComponent = components.find(component =>
-          component.types.includes('locality')
+          component.types.includes('administrative_area_level_2')
         );
         const stateComponent = components.find(component =>
           component.types.includes('administrative_area_level_1')

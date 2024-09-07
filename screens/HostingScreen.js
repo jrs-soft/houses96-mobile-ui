@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import HostingScreenStep1 from './HostingScreenStep1';
 import HostingScreenStep2 from './HostingScreenStep2';
 import HostingScreenStep3 from './HostingScreenStep3';
 import Colors from '../constants/colors';
+import HostingScreenStep4 from './HostingScreenStep4';
+import HostingScreenStep5 from './HostingScreenStep5';
 
 const HostingScreen = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -16,6 +18,10 @@ const HostingScreen = () => {
         return <HostingScreenStep2 />;
       case 3:
         return <HostingScreenStep3 />;
+      case 4:
+        return <HostingScreenStep4 />;
+      case 5:
+        return <HostingScreenStep5 />;    
       default:
         return <HostingScreenStep1 />;
     }
@@ -31,12 +37,12 @@ const HostingScreen = () => {
             <Text style={styles.buttonText}>Voltar</Text>
           </TouchableOpacity>
         )}
-        {currentStep < 3 && (
+        {currentStep < 5 && (
           <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep + 1)}>
             <Text style={styles.buttonText}>Próximo</Text>
           </TouchableOpacity>
         )}
-        {currentStep === 3 && (
+        {currentStep === 5 && (
           <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
             <Text style={styles.buttonText}>Finalizar</Text>
           </TouchableOpacity>
