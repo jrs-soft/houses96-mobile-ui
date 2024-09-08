@@ -1,89 +1,163 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import Octicons from '@expo/vector-icons/Octicons';
 import Zocial from '@expo/vector-icons/Zocial';
 import Fontisto from '@expo/vector-icons/Fontisto';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 const HostingScreenStep5 = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Text style={styles.title}>Diga aos hóspedes o que seu lugar tem a oferecer</Text>
       
-      {/* Spacer */}
-      {/* <View style={styles.spacer} /> */}
-
       {/* Rectangle Buttons */}
       <View style={styles.row}>
         <TouchableOpacity style={styles.rectangle}>
-          <AntDesign name="home" size={24} color="black" />
-          <Text style={styles.rectangleText}>Casa</Text>
+          <MaterialIcons name="wifi" size={24} color="black" />
+          <Text style={styles.rectangleText}>Wifi</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="apartment" size={24} color="#000" />
-          <Text style={styles.rectangleText}>Apartamento</Text>
+          <MaterialIcons name="tv" size={24} color="black" />
+          <Text style={styles.rectangleText}>TV</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.row}>
         <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="free-breakfast" size={24} color="black" />
-          <Text style={styles.rectangleText}>Cama & Café da manhã</Text>
+          <MaterialIcons name="kitchen" size={24} color="black" />
+          <Text style={styles.rectangleText}>Cozinha</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.rectangle}>
-          <Ionicons name="boat-outline" size={24} color="black" />
-          <Text style={styles.rectangleText}>Barco</Text>
+          <MaterialCommunityIcons name="dishwasher" size={24} color="black" />
+          <Text style={styles.rectangleText}>Lavadora</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.row}>
         <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="cabin" size={24} color="black" />
-          <Text style={styles.rectangleText}>Cabine</Text>
+          <MaterialCommunityIcons name="parking" size={24} color="black" />
+          <Text style={styles.rectangleText}>Estacionamento gratuito no local</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.rectangle}>
-          <FontAwesome6 name="caravan" size={24} color="black" />
-          <Text style={styles.rectangleText}>Campista</Text>
+          <MaterialCommunityIcons name="car-brake-parking" size={24} color="black" />
+          <Text style={styles.rectangleText}>Estacionamento pago no local</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
         <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="house" size={24} color="black" />
-          <Text style={styles.rectangleText}>Casa particular</Text>
+          <MaterialCommunityIcons name="air-conditioner" size={24} color="black" />
+          <Text style={styles.rectangleText}>Ar condicionado</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.rectangle}>
-          <Octicons name="container" size={24} color="black" />
-          <Text style={styles.rectangleText}>Container</Text>
+          <MaterialIcons name="workspaces" size={24} color="black" />
+          <Text style={styles.rectangleText}>Espaço de trabalho dedicado</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
         <TouchableOpacity style={styles.rectangle}>
-          <FontAwesome6 name="warehouse" size={24} color="black" />
-          <Text style={styles.rectangleText}>Fazenda</Text>
+          <MaterialIcons name="pool" size={24} color="black" />
+          <Text style={styles.rectangleText}>Piscina</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.rectangle}>
-          <Zocial name="guest" size={24} color="black" />
-          <Text style={styles.rectangleText}>Casa de hóspedes</Text>
+          <FontAwesome5 name="hot-tub" size={24} color="black" />
+          <Text style={styles.rectangleText}>Banheira de hidromassagem</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
         <TouchableOpacity style={styles.rectangle}>
-          <Fontisto name="hotel" size={24} color="black" />
-          <Text style={styles.rectangleText}>Hotel</Text>
+          <MaterialCommunityIcons name="patio-heater" size={24} color="black" />
+          <Text style={styles.rectangleText}>Pátio</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="houseboat" size={24} color="black" />
-          <Text style={styles.rectangleText}>Casa flutuante</Text>
+          <MaterialCommunityIcons name="grill" size={24} color="black" />
+          <Text style={styles.rectangleText}>Churrasqueira</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialIcons name="dining" size={24} color="black" />
+          <Text style={styles.rectangleText}>Área de jantar ao ar livre</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialCommunityIcons name="campfire" size={24} color="black" />
+          <Text style={styles.rectangleText}>Fogueira</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <Zocial name="opentable" size={24} color="black" />
+          <Text style={styles.rectangleText}>Mesa de sinuca</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialCommunityIcons name="fireplace" size={24} color="black" />
+          <Text style={styles.rectangleText}>Lareira interna</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialCommunityIcons name="piano" size={24} color="black" />
+          <Text style={styles.rectangleText}>Piano</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialIcons name="fitness-center" size={24} color="black" />
+          <Text style={styles.rectangleText}>Equipamento de exercício</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialIcons name="water" size={24} color="black" />
+          <Text style={styles.rectangleText}>Acesso ao lago</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialCommunityIcons name="beach" size={24} color="black" />
+          <Text style={styles.rectangleText}>Acesso à praia</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <FontAwesome name="shower" size={24} color="black" />
+          <Text style={styles.rectangleText}>Chuveiro ao ar livre</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialCommunityIcons name="smoke-detector-alert-outline" size={24} color="black" />
+          <Text style={styles.rectangleText}>Alarme de fumaça</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <Fontisto name="first-aid-alt" size={24} color="black" />
+          <Text style={styles.rectangleText}>Kit de primeiros socorros</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.rectangle}>
+          <FontAwesome name="fire-extinguisher" size={24} color="black" />
+          <Text style={styles.rectangleText}>Extintor de incêndio</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.rectangle}>
+          <MaterialCommunityIcons name="alarm-light-outline" size={24} color="black" />
+          <Text style={styles.rectangleText}>Alarme de monóxido de carbono</Text>
         </TouchableOpacity>
       </View>
 

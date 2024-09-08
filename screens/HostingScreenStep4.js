@@ -33,7 +33,7 @@ const HostingScreenStep4 = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Compartilhe algumas informações sobre sua propriedade</Text>
 
-      <CounterRow label="Convidados" count={guests} setCount={setGuests} />
+      <CounterRow label="Hóspedes" count={guests} setCount={setGuests} />
       <CounterRow label="Quartos" count={rooms} setCount={setRooms} />
       <CounterRow label="Camas" count={beds} setCount={setBeds} />
       <CounterRow label="Banheiros" count={bathrooms} setCount={setBathrooms} />
