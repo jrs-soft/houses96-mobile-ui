@@ -6,6 +6,7 @@ import HostingScreenStep3 from './HostingScreenStep3';
 import Colors from '../constants/colors';
 import HostingScreenStep4 from './HostingScreenStep4';
 import HostingScreenStep5 from './HostingScreenStep5';
+import { HostingProvider } from '../context/HostingContext';
 
 const HostingScreen = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -28,27 +29,29 @@ const HostingScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {renderStep()}
+    <HostingProvider>
+      <View style={styles.container}>
+        {renderStep()}
 
-      <View style={styles.buttonContainer}>
-        {currentStep > 1 && (
-          <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep - 1)}>
-            <Text style={styles.buttonText}>Voltar</Text>
-          </TouchableOpacity>
-        )}
-        {currentStep < 5 && (
-          <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep + 1)}>
-            <Text style={styles.buttonText}>Próximo</Text>
-          </TouchableOpacity>
-        )}
-        {currentStep === 5 && (
-          <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
-            <Text style={styles.buttonText}>Finalizar</Text>
-          </TouchableOpacity>
-        )}
+        <View style={styles.buttonContainer}>
+          {currentStep > 1 && (
+            <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep - 1)}>
+              <Text style={styles.buttonText}>Voltar</Text>
+            </TouchableOpacity>
+          )}
+          {currentStep < 5 && (
+            <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep + 1)}>
+              <Text style={styles.buttonText}>Próximo</Text>
+            </TouchableOpacity>
+          )}
+          {currentStep === 5 && (
+            <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
+              <Text style={styles.buttonText}>Finalizar</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </View>
+    </HostingProvider>
   );
 };
 
