@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', // Center text for long names
   },
   selectedRectangle: {
-    backgroundColor: '#ceecd9', // Light blue background
+    backgroundColor: '#ceecd9', // Light green background
     borderColor: Colors.primary500,
   },
   hoveredRectangle: {

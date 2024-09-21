@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -6,161 +6,85 @@ import Zocial from '@expo/vector-icons/Zocial';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Colors from '../constants/colors';
+
+const amenities = [
+  { code: 1, name: 'Wifi', icon: <MaterialIcons name="wifi" size={24} color="black" /> },
+  { code: 2, name: 'TV', icon: <MaterialIcons name="tv" size={24} color="black" /> },
+  { code: 3, name: 'Cozinha', icon: <MaterialIcons name="kitchen" size={24} color="black" /> },
+  { code: 4, name: 'Lavadora', icon: <MaterialCommunityIcons name="dishwasher" size={24} color="black" /> },
+  { code: 5, name: 'Estacionamento gratuito no local', icon: <MaterialCommunityIcons name="parking" size={24} color="black" /> },
+  { code: 6, name: 'Estacionamento pago no local', icon: <MaterialCommunityIcons name="car-brake-parking" size={24} color="black" /> },
+  { code: 7, name: 'Ar condicionado', icon: <MaterialCommunityIcons name="air-conditioner" size={24} color="black" /> },
+  { code: 8, name: 'Espaço de trabalho dedicado', icon: <MaterialIcons name="workspaces" size={24} color="black" /> },
+  { code: 9, name: 'Piscina', icon: <MaterialIcons name="pool" size={24} color="black" /> },
+  { code: 10, name: 'Banheira de hidromassagem', icon: <FontAwesome5 name="hot-tub" size={24} color="black" /> },
+  { code: 11, name: 'Pátio', icon: <MaterialCommunityIcons name="patio-heater" size={24} color="black" /> },
+  { code: 12, name: 'Churrasqueira', icon: <MaterialCommunityIcons name="grill" size={24} color="black" /> },
+  { code: 13, name: 'Área de jantar ao ar livre', icon: <MaterialIcons name="dining" size={24} color="black" /> },
+  { code: 14, name: 'Fogueira', icon: <MaterialCommunityIcons name="campfire" size={24} color="black" /> },
+  { code: 15, name: 'Mesa de sinuca', icon: <Zocial name="opentable" size={24} color="black" /> },
+  { code: 16, name: 'Lareira interna', icon: <MaterialCommunityIcons name="fireplace" size={24} color="black" /> },
+  { code: 17, name: 'Piano', icon: <MaterialCommunityIcons name="piano" size={24} color="black" /> },
+  { code: 18, name: 'Equipamento de exercício', icon: <MaterialIcons name="fitness-center" size={24} color="black" /> },
+  { code: 19, name: 'Acesso ao lago', icon: <MaterialIcons name="water" size={24} color="black" /> },
+  { code: 20, name: 'Acesso à praia', icon: <MaterialCommunityIcons name="beach" size={24} color="black" /> },
+  { code: 21, name: 'Chuveiro ao ar livre', icon: <FontAwesome name="shower" size={24} color="black" /> },
+  { code: 22, name: 'Alarme de fumaça', icon: <MaterialCommunityIcons name="smoke-detector-alert-outline" size={24} color="black" /> },
+  { code: 23, name: 'Kit de primeiros socorros', icon: <Fontisto name="first-aid-alt" size={24} color="black" /> },
+  { code: 24, name: 'Extintor de incêndio', icon: <FontAwesome name="fire-extinguisher" size={24} color="black" /> },
+  { code: 25, name: 'Alarme de monóxido de carbono', icon: <MaterialCommunityIcons name="alarm-light-outline" size={24} color="black" /> }
+];
 
 const HostingScreenStep5 = () => {
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [hoveredCode, setHoveredCode] = useState(null);
+
+  const toggleAmenity = (code) => {
+    setSelectedAmenities((prevSelected) =>
+      prevSelected.includes(code)
+        ? prevSelected.filter((c) => c !== code)
+        : [...prevSelected, code]
+    );
+  };
+
+  const isHovered = (code) => hoveredCode === code;
+  const isSelected = (code) => selectedAmenities.includes(code);
+
+  const renderAmenitiesInRows = () => {
+    const rows = [];
+    for (let i = 0; i < amenities.length; i += 2) {
+      const rowItems = amenities.slice(i, i + 2);
+      rows.push(
+        <View key={i} style={styles.row}>
+          {rowItems.map((amenity) => (
+            <TouchableOpacity
+              key={amenity.code}
+              style={[
+                styles.rectangle,
+                isSelected(amenity.code) && styles.selected,
+                isHovered(amenity.code) && styles.hovered
+              ]}
+              onPress={() => toggleAmenity(amenity.code)}
+              onPressIn={() => setHoveredCode(amenity.code)}
+              onPressOut={() => setHoveredCode(null)}
+            >
+              {amenity.icon}
+              <Text style={styles.rectangleText}>{amenity.name}</Text>
+            </TouchableOpacity>
+          ))}
+          {/* Add an empty view to fill the space if there is only one item in the row */}
+          {rowItems.length < 2 && <View style={styles.rectangle} />}
+        </View>
+      );
+    }
+    return rows;
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Text style={styles.title}>Diga aos hóspedes o que seu lugar tem a oferecer</Text>
-      
-      {/* Rectangle Buttons */}
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="wifi" size={24} color="black" />
-          <Text style={styles.rectangleText}>Wifi</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="tv" size={24} color="black" />
-          <Text style={styles.rectangleText}>TV</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="kitchen" size={24} color="black" />
-          <Text style={styles.rectangleText}>Cozinha</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="dishwasher" size={24} color="black" />
-          <Text style={styles.rectangleText}>Lavadora</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="parking" size={24} color="black" />
-          <Text style={styles.rectangleText}>Estacionamento gratuito no local</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="car-brake-parking" size={24} color="black" />
-          <Text style={styles.rectangleText}>Estacionamento pago no local</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="air-conditioner" size={24} color="black" />
-          <Text style={styles.rectangleText}>Ar condicionado</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="workspaces" size={24} color="black" />
-          <Text style={styles.rectangleText}>Espaço de trabalho dedicado</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="pool" size={24} color="black" />
-          <Text style={styles.rectangleText}>Piscina</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <FontAwesome5 name="hot-tub" size={24} color="black" />
-          <Text style={styles.rectangleText}>Banheira de hidromassagem</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="patio-heater" size={24} color="black" />
-          <Text style={styles.rectangleText}>Pátio</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="grill" size={24} color="black" />
-          <Text style={styles.rectangleText}>Churrasqueira</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="dining" size={24} color="black" />
-          <Text style={styles.rectangleText}>Área de jantar ao ar livre</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="campfire" size={24} color="black" />
-          <Text style={styles.rectangleText}>Fogueira</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <Zocial name="opentable" size={24} color="black" />
-          <Text style={styles.rectangleText}>Mesa de sinuca</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="fireplace" size={24} color="black" />
-          <Text style={styles.rectangleText}>Lareira interna</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="piano" size={24} color="black" />
-          <Text style={styles.rectangleText}>Piano</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="fitness-center" size={24} color="black" />
-          <Text style={styles.rectangleText}>Equipamento de exercício</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialIcons name="water" size={24} color="black" />
-          <Text style={styles.rectangleText}>Acesso ao lago</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="beach" size={24} color="black" />
-          <Text style={styles.rectangleText}>Acesso à praia</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <FontAwesome name="shower" size={24} color="black" />
-          <Text style={styles.rectangleText}>Chuveiro ao ar livre</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="smoke-detector-alert-outline" size={24} color="black" />
-          <Text style={styles.rectangleText}>Alarme de fumaça</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <Fontisto name="first-aid-alt" size={24} color="black" />
-          <Text style={styles.rectangleText}>Kit de primeiros socorros</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.rectangle}>
-          <FontAwesome name="fire-extinguisher" size={24} color="black" />
-          <Text style={styles.rectangleText}>Extintor de incêndio</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.rectangle}>
-          <MaterialCommunityIcons name="alarm-light-outline" size={24} color="black" />
-          <Text style={styles.rectangleText}>Alarme de monóxido de carbono</Text>
-        </TouchableOpacity>
-      </View>
-
+      {renderAmenitiesInRows()}
     </ScrollView>
   );
 };
@@ -177,18 +101,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-  },
-  description: {
-    fontSize: 16,
     textAlign: 'center',
-    marginBottom: 20,
-  },
-  spacer: {
-    height: 20,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 10,
   },
   rectangle: {
     width: 150,
@@ -198,11 +116,19 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    marginHorizontal: 10,
   },
   rectangleText: {
     marginTop: 10,
     fontSize: 16,
+    textAlign: 'center',
+  },
+  selected: {
+    borderColor: Colors.primary500,
+    backgroundColor: '#ceecd9',
+  },
+  hovered: {
+    backgroundColor: '#f5f5f5',
   },
 });
 
