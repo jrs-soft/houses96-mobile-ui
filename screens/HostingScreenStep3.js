@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import Colors from '../constants/colors';
 
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   label: {
