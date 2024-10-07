@@ -8,6 +8,10 @@ import HostingScreenStep4 from './HostingScreenStep4';
 import HostingScreenStep5 from './HostingScreenStep5';
 import { HostingProvider } from '../context/HostingContext';
 import HostingScreenStep6 from './HostingScreenStep6';
+import HostingScreenStep7 from './HostingScreenStep7';
+import HostingScreenStep8 from './HostingScreenStep8';
+import HostingScreenStep9 from './HostingScreenStep9';
+import HostingScreenStep10 from './HostingScreenStep10';
 
 const HostingScreen = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -25,7 +29,15 @@ const HostingScreen = () => {
       case 5:
         return <HostingScreenStep5 />;
       case 6:
-        return <HostingScreenStep6 />;      
+        return <HostingScreenStep6 />;
+      case 7:
+        return <HostingScreenStep7 />;
+      case 8:
+        return <HostingScreenStep8 />;
+      case 9:
+        return <HostingScreenStep9 />;
+      case 10:
+        return <HostingScreenStep10 />;              
       default:
         return <HostingScreenStep1 />;
     }
@@ -42,12 +54,12 @@ const HostingScreen = () => {
               <Text style={styles.buttonText}>Voltar</Text>
             </TouchableOpacity>
           )}
-          {currentStep < 6 && (
+          {currentStep < 10 && (
             <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep + 1)}>
               <Text style={styles.buttonText}>Próximo</Text>
             </TouchableOpacity>
           )}
-          {currentStep === 6 && (
+          {currentStep === 10 && (
             <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
               <Text style={styles.buttonText}>Finalizar</Text>
             </TouchableOpacity>

@@ -65,7 +65,7 @@ const HostingScreenStep6 = () => {
       <View style={styles.buttonContainer}>
 
         <TouchableOpacity style={[styles.footerButton, { marginRight: 20 }]} onPress={selectImageFromLibrary}>
-          <Text style={styles.buttonText}>Upload uma foto</Text>
+          <Text style={styles.buttonText}>Faça upload de uma foto</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.footerButton} onPress={captureImage}>
