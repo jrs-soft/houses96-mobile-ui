@@ -15,6 +15,7 @@ import HostingScreenStep10 from './HostingScreenStep10';
 import HostingScreenStep11 from './HostingScreenStep11';
 import HostingScreenStep12 from './HostingScreenStep12';
 import HostingScreenStep13 from './HostingScreenStep13';
+import HostingScreenStep14 from './HostingScreenStep14';
 
 const HostingScreen = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -46,7 +47,9 @@ const HostingScreen = () => {
       case 12:
         return <HostingScreenStep12 />;
       case 13:
-        return <HostingScreenStep13 />;                    
+        return <HostingScreenStep13 />;
+      case 14:
+        return <HostingScreenStep14 />;                      
       default:
         return <HostingScreenStep1 />;
     }
@@ -63,14 +66,14 @@ const HostingScreen = () => {
               <Text style={styles.buttonText}>Voltar</Text>
             </TouchableOpacity>
           )}
-          {currentStep < 13 && (
+          {currentStep < 14 && (
             <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep + 1)}>
               <Text style={styles.buttonText}>Próximo</Text>
             </TouchableOpacity>
           )}
-          {currentStep === 13 && (
+          {currentStep === 14 && (
             <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
-              <Text style={styles.buttonText}>Finalizar</Text>
+              <Text style={styles.buttonText}>Vamos começar</Text>
             </TouchableOpacity>
           )}
         </View>
