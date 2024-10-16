@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const CounterRow = ({ label, count, setCount }) => (
   <View style={styles.row}>

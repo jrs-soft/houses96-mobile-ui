@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyBxYF0PbSFXvVuytvVgqxGwy72KQpApsLk';
 
@@ -11,6 +12,7 @@ const HostingScreenStep3 = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [cep, setCep] = useState('');
+  const { hostingData, setHostingData } = useContext(HostingContext);
 
   const searchAddress = async () => {
     if (!address) {

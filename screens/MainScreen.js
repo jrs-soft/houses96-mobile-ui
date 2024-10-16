@@ -102,8 +102,8 @@ const MainScreen = ({ navigation }) => {
       {/* Footer */}
       <View style={styles.footer}>
         <TouchableOpacity style={styles.footerButton}>
-          <FontAwesome name="commenting-o" size={24} color="black" />
-          <Text>Comentar (12)</Text>
+          <MaterialIcons name="skip-previous" size={24} color="black" />
+          <Text>Anterior</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.footerButton}>
           <AntDesign name="dislike2" size={24} color="black" />
@@ -114,7 +114,7 @@ const MainScreen = ({ navigation }) => {
           <Text>Gostei (12)</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.footerButton}>
-          <MaterialIcons name="navigate-next" size={24} color="black" />
+          <MaterialIcons name="skip-next" size={24} color="black" />
           <Text>Próximo (19)</Text>
         </TouchableOpacity>
       </View>

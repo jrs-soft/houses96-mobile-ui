@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep2 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext);
   // Array of options with unique codes
   const options = [
     {
@@ -27,8 +29,8 @@ const HostingScreenStep2 = () => {
 
   // Function to handle selection by code
   const handleSelect = (code) => {
-    alert(code);
     setSelectedOption(code);
+    setHostingData({ ...hostingData, typeOfPlace: code });
   };
 
   // Function to handle mouse over effect

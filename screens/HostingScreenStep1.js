@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -8,10 +8,10 @@ import Octicons from '@expo/vector-icons/Octicons';
 import Zocial from '@expo/vector-icons/Zocial';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep1 = () => {
-  // Replace this with your context
-  // const { hostingData, setHostingData } = useContext(HostingContext);
+  const { hostingData, setHostingData } = useContext(HostingContext);
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -32,10 +32,9 @@ const HostingScreenStep1 = () => {
   ];
 
   const handleSelect = (id) => {
-    alert(id);
     setSelectedItem(id);
     // Update shared data or perform any other actions
-    // setHostingData({ ...hostingData, selectedPropertyType: id });
+    setHostingData({ ...hostingData, typeId: id });
   };
 
   // Function to split items into chunks of specified size

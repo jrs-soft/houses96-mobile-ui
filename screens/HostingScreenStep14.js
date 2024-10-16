@@ -1,7 +1,12 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep14 = ({ navigation }) => {
+
+  const { hostingData, setHostingData } = useContext(HostingContext);
+  alert(JSON.stringify(hostingData));
+
   return (
     <View style={styles.container}>
       {/* Title Row */}
