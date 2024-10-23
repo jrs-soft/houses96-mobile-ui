@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep11 = () => {
-  const [price, setPrice] = useState('R$ 126'); // State to manage price input
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
+  const [price, setPrice] = useState(''); // State to manage price input
   const screenWidth = Dimensions.get('window').width;
 
   // Function to handle price input change
   const handlePriceChange = (text) => {
     // Optionally, format the input value if needed
     setPrice(text);
+    setHostingData({ ...hostingData, pricePerNight: text});
   };
 
   return (

@@ -9,6 +9,7 @@ const GOOGLE_MAPS_API_KEY = 'AIzaSyBxYF0PbSFXvVuytvVgqxGwy72KQpApsLk';
 const HostingScreenStep3 = () => {
   const [address, setAddress] = useState('');
   const [street, setStreet] = useState('');
+  const [streetNumber, setStreetNumber] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [cep, setCep] = useState('');
@@ -32,6 +33,9 @@ const HostingScreenStep3 = () => {
         const streetComponent = components.find(component =>
           component.types.includes('route')
         );
+        const streetNumberComponent = components.find(component => 
+          component.types.includes("street_number")
+        );
         const cityComponent = components.find(component =>
           component.types.includes('administrative_area_level_2')
         );
@@ -43,9 +47,14 @@ const HostingScreenStep3 = () => {
         );
 
         setStreet(streetComponent ? streetComponent.long_name : 'Desconhecido');
+        setStreetNumber(streetNumberComponent ? streetNumberComponent.long_name : 'Desconhecido');
         setCity(cityComponent ? cityComponent.long_name : 'Desconhecido');
         setState(stateComponent ? stateComponent.long_name : 'Desconhecido');
         setCep(postalCodeComponent ? postalCodeComponent.long_name : 'Desconhecido');
+
+        const address = street + ', ' + streetNumber; 
+        setHostingData({ ...hostingData, address: address, cityName: city, stateName: state, zipCode: cep});
+
       } else {
         alert('Endereço não encontrado');
       }
@@ -86,6 +95,16 @@ const HostingScreenStep3 = () => {
             value={street}
             onChangeText={setStreet}
             placeholder="Digite a rua"
+          />
+        </View>
+
+        <View style={styles.tableRow}>
+          <Text style={styles.label}>Número: </Text>
+          <TextInput
+            style={styles.tableInput}
+            value={streetNumber}
+            onChangeText={setStreetNumber}
+            placeholder="Digite o número"
           />
         </View>
         
@@ -142,7 +161,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginRight: 8,
-    width: 60
+    width: 65
   },
   input: {
     flex: 1,

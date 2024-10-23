@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep10 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
@@ -14,6 +16,7 @@ const HostingScreenStep10 = () => {
 
   const selectOption = (id) => {
     setSelectedOption(id);
+    setHostingData({ ...hostingData, firstBookingType: id});
   };
 
   return (

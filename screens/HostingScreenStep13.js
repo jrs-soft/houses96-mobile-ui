@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep13 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const screenWidth = Dimensions.get('window').width;
 
   return (

@@ -1,15 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep12 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [promotionDiscount, setPromotionDiscount] = useState('20%');
   const [weeklyDiscount, setWeeklyDiscount] = useState('10%');
   const [monthlyDiscount, setMonthlyDiscount] = useState('20%');
-  const [isPromoChecked, setPromoChecked] = useState(true);
-  const [isWeeklyChecked, setWeeklyChecked] = useState(true);
-  const [isMonthlyChecked, setMonthlyChecked] = useState(true);
+  const [isPromoChecked, setPromoChecked] = useState(false);
+  const [isWeeklyChecked, setWeeklyChecked] = useState(false);
+  const [isMonthlyChecked, setMonthlyChecked] = useState(false);
+
+  const handlePromotionDiscount = (value) => {
+    setPromotionDiscount(value);
+    setHostingData({ ...hostingData, promotionDiscount: value});
+  };
+
+  const handlePromoChecked = (value) => {
+    setPromoChecked(value);
+    setHostingData({ ...hostingData, isPromoChecked: value});
+  };
+
+  const handleWeeklyDiscount = (value) => {
+    setWeeklyDiscount(value);
+    setHostingData({ ...hostingData, weeklyDiscount: value});
+  };
+
+  const handleWeeklyChecked = (value) => {
+    setWeeklyChecked(value);
+    setHostingData({ ...hostingData, isWeeklyChecked: value});
+  };
+
+  const handleMonthlyDiscount = (value) => {
+    setMonthlyDiscount(value);
+    setHostingData({ ...hostingData, monthlyDiscount: value});
+  };
+
+  const handleMonthlyChecked = (value) => {
+    setMonthlyChecked(value);
+    setHostingData({ ...hostingData, isMonthlyChecked: value});
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -23,12 +55,12 @@ const HostingScreenStep12 = () => {
         <TextInput
           style={styles.input}
           value={promotionDiscount}
-          onChangeText={setPromotionDiscount}
+          onChangeText={handlePromotionDiscount}
         />
         <Text style={styles.label}>Nova promoção de inclusão</Text>
         <CheckBox
           value={isPromoChecked}
-          onValueChange={setPromoChecked}
+          onValueChange={handlePromoChecked}
           onCheckColor={Colors.primary500}  // Custom check color
           onTintColor={Colors.primary500}   // Custom border color when checked
           tintColor={Colors.primary500}     // Custom border color when unchecked
@@ -40,12 +72,12 @@ const HostingScreenStep12 = () => {
         <TextInput
           style={styles.input}
           value={weeklyDiscount}
-          onChangeText={setWeeklyDiscount}
+          onChangeText={handleWeeklyDiscount}
         />
         <Text style={styles.label}>Desconto semanal</Text>
         <CheckBox
           value={isWeeklyChecked}
-          onValueChange={setWeeklyChecked}
+          onValueChange={handleWeeklyChecked}
           onCheckColor={Colors.primary500}  // Custom check color
           onTintColor={Colors.primary500}   // Custom border color when checked
           tintColor={Colors.primary500}     // Custom border color when unchecked
@@ -57,12 +89,12 @@ const HostingScreenStep12 = () => {
         <TextInput
           style={styles.input}
           value={monthlyDiscount}
-          onChangeText={setMonthlyDiscount}
+          onChangeText={handleMonthlyDiscount}
         />
         <Text style={styles.label}>Desconto mensal</Text>
         <CheckBox
           value={isMonthlyChecked}
-          onValueChange={setMonthlyChecked}
+          onValueChange={handleMonthlyChecked}
           onCheckColor={Colors.primary500}  // Custom check color
           onTintColor={Colors.primary500}   // Custom border color when checked
           tintColor={Colors.primary500}     // Custom border color when unchecked

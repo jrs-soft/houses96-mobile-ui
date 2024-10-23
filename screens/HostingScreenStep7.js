@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep7 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [title, setTitle] = useState('');
   const maxLength = 32; // Maximum character limit for the textarea
+
+  const handleTitle = (value) => {
+    setTitle(value);
+    setHostingData({ ...hostingData, title: title});
+  };
 
   return (
     <View style={styles.container}>
@@ -14,7 +21,7 @@ const HostingScreenStep7 = () => {
         multiline
         numberOfLines={4}
         value={title}
-        onChangeText={(text) => setTitle(text)}
+        onChangeText={(text) => handleTitle(text)}
         placeholder="Digite o título aqui..."
         maxLength={maxLength}
       />

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep6 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [images, setImages] = useState([]);
 
   // Function to pick an image from the library
@@ -27,6 +29,7 @@ const HostingScreenStep6 = () => {
               fileName: asset.fileName,
             }));
             setImages((prevImages) => [...prevImages, ...selectedImages]);
+            setHostingData({ ...hostingData, pictures: images});
           }
         }
       }
@@ -53,6 +56,7 @@ const HostingScreenStep6 = () => {
               fileName: asset.fileName,
             }));
             setImages((prevImages) => [...prevImages, ...capturedImages]);
+            setHostingData({ ...hostingData, pictures: images});
           }
         }
       }

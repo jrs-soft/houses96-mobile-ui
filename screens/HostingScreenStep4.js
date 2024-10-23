@@ -25,19 +25,45 @@ const CounterRow = ({ label, count, setCount }) => (
 );
 
 const HostingScreenStep4 = () => {
-  const [guests, setGuests] = useState(0);
-  const [rooms, setRooms] = useState(0);
-  const [beds, setBeds] = useState(0);
-  const [bathrooms, setBathrooms] = useState(0);
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
+
+  const updateHostingData = (key, value) => {
+    setHostingData(prev => ({ ...prev, [key]: value })); // Update context
+  };
+
+  const [guests, setGuests] = useState(hostingData.guests || 0);
+  const [rooms, setRooms] = useState(hostingData.rooms || 0);
+  const [beds, setBeds] = useState(hostingData.beds || 0);
+  const [bathrooms, setBathrooms] = useState(hostingData.bathrooms || 0);
+
+  const handleSetGuests = (value) => {
+    setGuests(value);
+    updateHostingData('maximumNumberOfGuests', value);
+  };
+
+  const handleSetRooms = (value) => {
+    setRooms(value);
+    updateHostingData('numberOfBedrooms', value);
+  };
+
+  const handleSetBeds = (value) => {
+    setBeds(value);
+    updateHostingData('numberOfBeds', value);
+  };
+
+  const handleSetBathrooms = (value) => {
+    setBathrooms(value);
+    updateHostingData('numberOfBathrooms', value);
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Compartilhe algumas informações sobre sua propriedade</Text>
 
-      <CounterRow label="Hóspedes" count={guests} setCount={setGuests} />
-      <CounterRow label="Quartos" count={rooms} setCount={setRooms} />
-      <CounterRow label="Camas" count={beds} setCount={setBeds} />
-      <CounterRow label="Banheiros" count={bathrooms} setCount={setBathrooms} />
+      <CounterRow label="Hóspedes" count={guests} setCount={handleSetGuests} />
+      <CounterRow label="Quartos" count={rooms} setCount={handleSetRooms} />
+      <CounterRow label="Camas" count={beds} setCount={handleSetBeds} />
+      <CounterRow label="Banheiros" count={bathrooms} setCount={handleSetBathrooms} />
     </View>
   );
 };

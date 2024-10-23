@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -7,6 +7,7 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Colors from '../constants/colors';
+import { HostingContext } from '../context/HostingContext';
 
 const amenities = [
   { code: 1, name: 'Wifi', icon: <MaterialIcons name="wifi" size={24} color="black" /> },
@@ -37,6 +38,7 @@ const amenities = [
 ];
 
 const HostingScreenStep5 = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [hoveredCode, setHoveredCode] = useState(null);
 
@@ -46,6 +48,7 @@ const HostingScreenStep5 = () => {
         ? prevSelected.filter((c) => c !== code)
         : [...prevSelected, code]
     );
+    setHostingData({ ...hostingData, amenityIds: selectedAmenities});
   };
 
   const isHovered = (code) => hoveredCode === code;

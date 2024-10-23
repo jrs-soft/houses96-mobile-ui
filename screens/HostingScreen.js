@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import HostingScreenStep1 from './HostingScreenStep1';
 import HostingScreenStep2 from './HostingScreenStep2';
@@ -6,7 +6,7 @@ import HostingScreenStep3 from './HostingScreenStep3';
 import Colors from '../constants/colors';
 import HostingScreenStep4 from './HostingScreenStep4';
 import HostingScreenStep5 from './HostingScreenStep5';
-import { HostingProvider } from '../context/HostingContext';
+import { HostingContext } from '../context/HostingContext';
 import HostingScreenStep6 from './HostingScreenStep6';
 import HostingScreenStep7 from './HostingScreenStep7';
 import HostingScreenStep8 from './HostingScreenStep8';
@@ -18,7 +18,41 @@ import HostingScreenStep13 from './HostingScreenStep13';
 import HostingScreenStep14 from './HostingScreenStep14';
 
 const HostingScreen = () => {
+  const { hostingData, setHostingData } = useContext(HostingContext);
   const [currentStep, setCurrentStep] = useState(1);
+
+  const validateStep = () => {
+    switch (currentStep) {
+      case 1:
+        return validateStep1();
+      case 2:
+        return validateStep2();
+      case 3:
+        return validateStep3();  
+      default:
+        return true;
+    }
+  };
+
+  const validateStep1 = () => {
+    return hostingData.typeId !== null;
+  };
+
+  const validateStep2 = () => {
+    return hostingData.typeOfPlace !== null;
+  };
+
+  const validateStep3 = () => {
+    return hostingData.address !== null && hostingData.cityName !== null && hostingData.stateName !== null && hostingData.zipCode !== null;
+  };
+
+  const handleNextStep = () => {
+    if (validateStep()) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      alert("Por favor, preencha ou selecione o(s) campo(s) obrigatório(s).");
+    }
+  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -56,7 +90,7 @@ const HostingScreen = () => {
   };
 
   return (
-    <HostingProvider>
+  
       <View style={styles.container}>
         {renderStep()}
 
@@ -67,7 +101,7 @@ const HostingScreen = () => {
             </TouchableOpacity>
           )}
           {currentStep < 14 && (
-            <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep + 1)}>
+            <TouchableOpacity style={styles.footerButton} onPress={handleNextStep}>
               <Text style={styles.buttonText}>Próximo</Text>
             </TouchableOpacity>
           )}
@@ -78,7 +112,7 @@ const HostingScreen = () => {
           )}
         </View>
       </View>
-    </HostingProvider>
+ 
   );
 };
 

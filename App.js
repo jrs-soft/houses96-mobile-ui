@@ -16,8 +16,9 @@ import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import HostingScreen from './screens/HostingScreen';
 import HeaderDetail from './components/HeaderDetail';
-import { Provider } from'react-redux';
+import { Provider } from 'react-redux';
 import { store } from'./redux/store';
+import { HostingProvider } from './context/HostingContext';
 
 
 // Keep the splash screen visible while we fetch resources
@@ -70,7 +71,13 @@ function AuthenticatedStack() {
       />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Configurações" component={SettingsScreen} />
-      <Stack.Screen name="Hospedagem" component={HostingScreen} />
+      <Stack.Screen name="Hospedagem">
+        {() => (
+          <HostingProvider>
+            <HostingScreen />
+          </HostingProvider>
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
