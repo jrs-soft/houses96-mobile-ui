@@ -16,10 +16,12 @@ import HostingScreenStep11 from './HostingScreenStep11';
 import HostingScreenStep12 from './HostingScreenStep12';
 import HostingScreenStep13 from './HostingScreenStep13';
 import HostingScreenStep14 from './HostingScreenStep14';
+import MessageAlert from '../components/ui/MessageAlert';
 
 const HostingScreen = () => {
   const { hostingData, setHostingData } = useContext(HostingContext);
   const [currentStep, setCurrentStep] = useState(1);
+  const [alertMessage, setAlertMessage] = useState(null);
 
   const validateStep = () => {
     switch (currentStep) {
@@ -28,7 +30,25 @@ const HostingScreen = () => {
       case 2:
         return validateStep2();
       case 3:
-        return validateStep3();  
+        return validateStep3();
+      case 4:
+        return validateStep4();
+      case 5:
+        return validateStep5();
+      case 6:
+        return validateStep6();
+      case 7:
+        return validateStep7();
+      case 8:
+        return validateStep8();
+      case 9:
+        return validateStep9();
+      case 10:
+        return validateStep10();
+      case 11:
+        return validateStep11();
+      case 12:
+        return validateStep12();                    
       default:
         return true;
     }
@@ -43,14 +63,73 @@ const HostingScreen = () => {
   };
 
   const validateStep3 = () => {
-    return hostingData.address !== null && hostingData.cityName !== null && hostingData.stateName !== null && hostingData.zipCode !== null;
+    return hostingData.address !== null 
+              && hostingData.cityName !== null 
+              && hostingData.stateName !== null 
+              && hostingData.zipCode !== null;
+  };
+
+  const validateStep4 = () => {
+    return hostingData.maximumNumberOfGuests !== null
+              && hostingData.maximumNumberOfGuests > 0
+              && hostingData.numberOfBedrooms !== null
+              && hostingData.numberOfBedrooms > 0 
+              && hostingData.numberOfBeds !== null
+              && hostingData.numberOfBeds > 0 
+              && hostingData.numberOfBathrooms !== null
+              && hostingData.numberOfBathrooms > 0;
+  };
+
+  const validateStep5 = () => {
+    return hostingData.amenityIds.length > 0;
+  };
+
+  const validateStep6 = () => {
+    return hostingData.pictures.length > 0;
+  };
+
+  const validateStep7 = () => {
+    return hostingData.title !== null;
+  };
+
+  const validateStep8 = () => {
+    return hostingData.descriptionTypes.length > 0;
+  };
+
+  const validateStep9 = () => {
+    return hostingData.description !== null;
+  };
+
+  const validateStep10 = () => {
+    return hostingData.firstBookingType !== null;
+  };
+
+  const validateStep11 = () => {
+
+    // Step 1: Replace comma with dot
+    const formattedValue = hostingData.pricePerNight.replace(',', '.');
+
+    // Step 2: Convert to number
+    const numberValue = parseFloat(formattedValue);
+
+    return hostingData.pricePerNight !== null && numberValue > 0;
+  };
+
+  const validateStep12 = () => {
+    return hostingData.promotionDiscount !== null 
+              && hostingData.weeklyDiscount !== null 
+              && hostingData.monthlyDiscount !== null 
+              && hostingData.isPromoChecked !== null 
+              && hostingData.isWeeklyChecked !== null 
+              && hostingData.isMonthlyChecked !== null;
   };
 
   const handleNextStep = () => {
     if (validateStep()) {
+      setAlertMessage(null); // Clear alert when validation passes
       setCurrentStep(currentStep + 1);
     } else {
-      alert("Por favor, preencha ou selecione o(s) campo(s) obrigatório(s).");
+      setAlertMessage("Por favor, preencha ou selecione o(s) campo(s) obrigatório(s)."); // Set alert when validation fails
     }
   };
 
@@ -93,6 +172,11 @@ const HostingScreen = () => {
   
       <View style={styles.container}>
         {renderStep()}
+
+        {/* Conditionally render the MessageAlert if there's an alertMessage */}
+        {alertMessage && (
+          <MessageAlert type="warning" message={alertMessage} />
+        )}
 
         <View style={styles.buttonContainer}>
           {currentStep > 1 && (

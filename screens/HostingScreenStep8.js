@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; // Assuming you are using Expo
 import Colors from '../constants/colors';
@@ -7,6 +7,10 @@ import { HostingContext } from '../context/HostingContext';
 const HostingScreenStep8 = () => {
   const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    setHostingData({ ...hostingData, descriptionTypes: selectedItems });
+  }, [selectedItems]);
 
   const options = [
     { id: 1, name: 'Pacífico', icon: 'beach-access' },
@@ -23,7 +27,6 @@ const HostingScreenStep8 = () => {
     } else if (selectedItems.length < 2) {
       setSelectedItems([...selectedItems, id]);
     }
-    setHostingData({ ...hostingData, descriptionTypes: selectedItems});
   };
 
   // Function to create rows with two items each

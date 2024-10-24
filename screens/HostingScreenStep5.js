@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -42,13 +42,17 @@ const HostingScreenStep5 = () => {
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [hoveredCode, setHoveredCode] = useState(null);
 
+  // This effect will update hostingData whenever selectedAmenities changes
+  useEffect(() => {
+    setHostingData({ ...hostingData, amenityIds: selectedAmenities });
+  }, [selectedAmenities]);
+
   const toggleAmenity = (code) => {
     setSelectedAmenities((prevSelected) =>
       prevSelected.includes(code)
         ? prevSelected.filter((c) => c !== code)
         : [...prevSelected, code]
     );
-    setHostingData({ ...hostingData, amenityIds: selectedAmenities});
   };
 
   const isHovered = (code) => hoveredCode === code;

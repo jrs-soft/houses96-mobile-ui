@@ -4,7 +4,7 @@ import { HostingContext } from '../context/HostingContext';
 
 const HostingScreenStep9 = () => {
   const { hostingData, setHostingData } = useContext(HostingContext); // Access context
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(null);
   const maxLength = 500; // Maximum character limit for the textarea
 
   const handleDescription = (value) => {
@@ -27,7 +27,7 @@ const HostingScreenStep9 = () => {
       />
 
       <Text style={styles.counter}>
-        {description.length}/{maxLength} caracteres
+        {description && description.length}/{maxLength} caracteres
       </Text>
     </View>
   );

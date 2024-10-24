@@ -7,11 +7,18 @@ const HostingScreenStep11 = () => {
   const [price, setPrice] = useState(''); // State to manage price input
   const screenWidth = Dimensions.get('window').width;
 
+  // Function to format the input value as currency
+  const formatCurrency = (value) => {
+    const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+    const formattedValue = (numericValue / 100).toFixed(2).replace('.', ','); // Format as currency
+    return formattedValue;
+  };
+
   // Function to handle price input change
   const handlePriceChange = (text) => {
-    // Optionally, format the input value if needed
-    setPrice(text);
-    setHostingData({ ...hostingData, pricePerNight: text});
+    const formattedPrice = formatCurrency(text);
+    setPrice(formattedPrice); // Update formatted price
+    setHostingData({ ...hostingData, pricePerNight: formattedPrice }); // Update context with formatted price
   };
 
   return (
@@ -25,13 +32,14 @@ const HostingScreenStep11 = () => {
         value={price}
         onChangeText={handlePriceChange}
         keyboardType="numeric" // Opens the numeric keyboard for input
+        placeholder="0,00"
       />
 
       {/* Price Breakdown Box */}
       <View style={[styles.priceBox, { width: screenWidth * 0.9 }]}>
         <View style={styles.row}>
           <Text style={styles.column1}>Preço base</Text>
-          <Text style={styles.column2}>{price}</Text>
+          <Text style={styles.column2}>R$ {price || '0,00'}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.column1}>Taxa de serviço ao hóspede</Text>
