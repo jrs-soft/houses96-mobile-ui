@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { HostingContext } from '../context/HostingContext';
 
@@ -22,6 +22,12 @@ const HostingScreenStep2 = () => {
       description: 'Os hóspedes dormem em um quarto ou área comum que pode ser compartilhada com você ou outras pessoas.',
     },
   ];
+
+  useEffect(() => {
+    if (hostingData.typeOfPlace) {
+      setSelectedOption(hostingData.typeOfPlace);
+    }
+  }, [hostingData.typeOfPlace]);
 
   // State for selected option
   const [selectedOption, setSelectedOption] = useState(null);

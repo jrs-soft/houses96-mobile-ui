@@ -85,7 +85,7 @@ const HostingScreen = () => {
   };
 
   const validateStep6 = () => {
-    return hostingData.pictures.length > 0;
+    return hostingData.pictures.length > 4;
   };
 
   const validateStep7 = () => {
@@ -116,12 +116,9 @@ const HostingScreen = () => {
   };
 
   const validateStep12 = () => {
-    return hostingData.promotionDiscount !== null 
-              && hostingData.weeklyDiscount !== null 
-              && hostingData.monthlyDiscount !== null 
-              && hostingData.isPromoChecked !== null 
-              && hostingData.isWeeklyChecked !== null 
-              && hostingData.isMonthlyChecked !== null;
+    return (hostingData.promotionDiscount !== null && hostingData.isPromoChecked === true)
+              || (hostingData.weeklyDiscount !== null && hostingData.isWeeklyChecked === true) 
+              || (hostingData.monthlyDiscount !== null && hostingData.isMonthlyChecked === true)
   };
 
   const handleNextStep = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import Colors from '../constants/colors';
@@ -14,6 +14,20 @@ const HostingScreenStep3 = () => {
   const [state, setState] = useState('');
   const [cep, setCep] = useState('');
   const { hostingData, setHostingData } = useContext(HostingContext);
+
+  useEffect(() => {
+    if (hostingData.address && hostingData.cityName && hostingData.stateName && hostingData.zipCode) {
+      const addressArr = hostingData.address.split(',');
+      const street = addressArr[0];
+      const streetNumber = addressArr[1];
+      setAddress(hostingData.address);
+      setStreet(street);
+      setStreetNumber(streetNumber);
+      setCity(hostingData.cityName);
+      setState(hostingData.stateName);
+      setCep(hostingData.zipCode);
+    }
+  }, [hostingData.address, hostingData.cityName, hostingData.stateName, hostingData.zipCode]);
 
   const searchAddress = async () => {
     if (!address) {
@@ -46,14 +60,25 @@ const HostingScreenStep3 = () => {
           component.types.includes('postal_code')
         );
 
-        setStreet(streetComponent ? streetComponent.long_name : 'Desconhecido');
-        setStreetNumber(streetNumberComponent ? streetNumberComponent.long_name : 'Desconhecido');
-        setCity(cityComponent ? cityComponent.long_name : 'Desconhecido');
-        setState(stateComponent ? stateComponent.long_name : 'Desconhecido');
-        setCep(postalCodeComponent ? postalCodeComponent.long_name : 'Desconhecido');
+        const updatedStreet = streetComponent ? streetComponent.long_name : 'Desconhecido';
+        const updatedStreetNumber = streetNumberComponent ? streetNumberComponent.long_name : 'Desconhecido';
+        const updatedCity = cityComponent ? cityComponent.long_name : 'Desconhecido';
+        const updatedState = stateComponent ? stateComponent.long_name : 'Desconhecido';
+        const updatedCep = postalCodeComponent ? postalCodeComponent.long_name : 'Desconhecido';
 
-        const address = street + ', ' + streetNumber; 
-        setHostingData({ ...hostingData, address: address, cityName: city, stateName: state, zipCode: cep});
+        setStreet(updatedStreet);
+        setStreetNumber(updatedStreetNumber);
+        setCity(updatedCity);
+        setState(updatedState);
+        setCep(updatedCep);
+
+        setHostingData({ 
+          ...hostingData, 
+          address: `${updatedStreet}, ${updatedStreetNumber}`, 
+          cityName: updatedCity, 
+          stateName: updatedState, 
+          zipCode: updatedCep 
+        });
 
       } else {
         alert('Endereço não encontrado');

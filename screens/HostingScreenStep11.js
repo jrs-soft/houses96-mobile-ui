@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { HostingContext } from '../context/HostingContext';
 
@@ -20,6 +20,12 @@ const HostingScreenStep11 = () => {
     setPrice(formattedPrice); // Update formatted price
     setHostingData({ ...hostingData, pricePerNight: formattedPrice }); // Update context with formatted price
   };
+
+  // Calculate derived values
+  const basePrice = parseFloat(price.replace(',', '.')) || 0; // Convert to number
+  const serviceFee = (basePrice * 0.10).toFixed(2).replace('.', ',');
+  const priceBeforeTaxes = (basePrice + basePrice * 0.10).toFixed(2).replace('.', ',');
+  const earnings = (basePrice - basePrice * 0.03).toFixed(2).replace('.', ',');
 
   return (
     <View style={styles.container}>
@@ -43,15 +49,15 @@ const HostingScreenStep11 = () => {
         </View>
         <View style={styles.row}>
           <Text style={styles.column1}>Taxa de serviço ao hóspede</Text>
-          <Text style={styles.column2}>R$ 18</Text>
+          <Text style={styles.column2}>R$ {serviceFee}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.column1}>Preço antes dos impostos</Text>
-          <Text style={styles.column2}>R$ 144</Text>
+          <Text style={styles.column2}>R$ {priceBeforeTaxes}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.column1}>Seu ganho</Text>
-          <Text style={styles.column2}>R$ 122</Text>
+          <Text style={styles.column2}>R$ {earnings}</Text>
         </View>
       </View>
     </View>

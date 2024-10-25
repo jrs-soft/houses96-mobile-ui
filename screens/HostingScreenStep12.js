@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Colors from '../constants/colors';

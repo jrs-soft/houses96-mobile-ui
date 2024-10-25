@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -30,6 +30,12 @@ const HostingScreenStep1 = () => {
     { id: 11, name: 'Hotel', icon: <Fontisto name="hotel" size={24} color="black" /> },
     { id: 12, name: 'Casa flutuante', icon: <MaterialIcons name="houseboat" size={24} color="black" /> },
   ];
+
+  useEffect(() => {
+    if (hostingData.typeId) {
+      setSelectedItem(hostingData.typeId);
+    }
+  }, [hostingData.typeId]);
 
   const handleSelect = (id) => {
     setSelectedItem(id);
