@@ -27,6 +27,21 @@ const CounterRow = ({ label, count, setCount }) => (
 const HostingScreenStep4 = () => {
   const { hostingData, setHostingData } = useContext(HostingContext); // Access context
 
+  useEffect(() => {
+    if (hostingData.maximumNumberOfGuests) {
+      setGuests(hostingData.maximumNumberOfGuests);
+    }
+    if (hostingData.numberOfBedrooms) {
+      setRooms(hostingData.numberOfBedrooms);
+    }
+    if (hostingData.numberOfBeds) {
+      setBeds(hostingData.numberOfBeds);
+    }
+    if (hostingData.numberOfBathrooms) {
+      setBathrooms(hostingData.numberOfBathrooms);
+    }
+  }, [hostingData.maximumNumberOfGuests, hostingData.numberOfBedrooms, hostingData.numberOfBeds, hostingData.numberOfBathrooms]);
+
   const updateHostingData = (key, value) => {
     setHostingData(prev => ({ ...prev, [key]: value })); // Update context
   };

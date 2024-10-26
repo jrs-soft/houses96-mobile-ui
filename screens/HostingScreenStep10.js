@@ -9,6 +9,12 @@ const HostingScreenStep10 = () => {
   const { hostingData, setHostingData } = useContext(HostingContext); // Access context
   const [selectedOption, setSelectedOption] = useState(null);
 
+  useEffect(() => {
+    if (hostingData.firstBookingType) {
+      setSelectedOption(hostingData.firstBookingType);
+    }
+  }, [hostingData.firstBookingType]);
+
   const options = [
     { id: '1', label: 'Qualquer hóspede', icon: 'group' },
     { id: '2', label: 'Hóspede experiente', icon: 'person' },

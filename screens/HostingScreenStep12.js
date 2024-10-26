@@ -13,6 +13,27 @@ const HostingScreenStep12 = () => {
   const [isWeeklyChecked, setWeeklyChecked] = useState(false);
   const [isMonthlyChecked, setMonthlyChecked] = useState(false);
 
+  useEffect(() => {
+    if (hostingData.promotionDiscount) {
+      setPromotionDiscount(hostingData.promotionDiscount);
+    }
+    if (hostingData.isPromoChecked) {
+      setPromoChecked(hostingData.isPromoChecked);
+    }
+    if (hostingData.weeklyDiscount) {
+      setWeeklyDiscount(hostingData.weeklyDiscount);
+    }
+    if (hostingData.isWeeklyChecked) {
+      setWeeklyChecked(hostingData.isWeeklyChecked);
+    }
+    if (hostingData.monthlyDiscount) {
+      setMonthlyDiscount(hostingData.monthlyDiscount);
+    }
+    if (hostingData.isMonthlyChecked) {
+      setMonthlyChecked(hostingData.isMonthlyChecked);
+    }
+  }, [hostingData.promotionDiscount, hostingData.isPromoChecked, hostingData.weeklyDiscount, hostingData.isWeeklyChecked, hostingData.monthlyDiscount, hostingData.isMonthlyChecked]);
+
   const handlePromotionDiscount = (value) => {
     setPromotionDiscount(value);
     setHostingData({ ...hostingData, promotionDiscount: value});

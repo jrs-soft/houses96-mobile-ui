@@ -9,6 +9,12 @@ const HostingScreenStep8 = () => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
+    if (hostingData.descriptionTypes && hostingData.descriptionTypes.length > 0) {
+      setSelectedItems(hostingData.descriptionTypes);
+    }
+  }, [hostingData.descriptionTypes]);
+
+  useEffect(() => {
     setHostingData({ ...hostingData, descriptionTypes: selectedItems });
   }, [selectedItems]);
 

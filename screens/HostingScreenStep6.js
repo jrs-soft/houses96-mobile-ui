@@ -9,6 +9,12 @@ const HostingScreenStep6 = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
+    if (hostingData.pictures && hostingData.pictures.length > 0) {
+      setImages(hostingData.pictures);
+    }
+  }, [hostingData.pictures]);
+  
+  useEffect(() => {
     setHostingData({ ...hostingData, pictures: images });
   }, [images]);
 

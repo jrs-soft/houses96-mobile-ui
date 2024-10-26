@@ -7,6 +7,12 @@ const HostingScreenStep9 = () => {
   const [description, setDescription] = useState(null);
   const maxLength = 500; // Maximum character limit for the textarea
 
+  useEffect(() => {
+    if (hostingData.description) {
+      setDescription(hostingData.description);
+    }
+  }, [hostingData.description]);
+
   const handleDescription = (value) => {
     setDescription(value);
     setHostingData({ ...hostingData, description: value});

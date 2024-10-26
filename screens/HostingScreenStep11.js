@@ -7,6 +7,12 @@ const HostingScreenStep11 = () => {
   const [price, setPrice] = useState(''); // State to manage price input
   const screenWidth = Dimensions.get('window').width;
 
+  useEffect(() => {
+    if (hostingData.pricePerNight) {
+      setPrice(hostingData.pricePerNight);
+    }
+  }, [hostingData.pricePerNight]);
+
   // Function to format the input value as currency
   const formatCurrency = (value) => {
     const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters

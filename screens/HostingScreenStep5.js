@@ -42,7 +42,12 @@ const HostingScreenStep5 = () => {
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [hoveredCode, setHoveredCode] = useState(null);
 
-  // This effect will update hostingData whenever selectedAmenities changes
+  useEffect(() => {
+    if (hostingData.amenityIds && hostingData.amenityIds.length > 0) {
+      setSelectedAmenities(hostingData.amenityIds);
+    }
+  }, [hostingData.amenityIds]);
+  
   useEffect(() => {
     setHostingData({ ...hostingData, amenityIds: selectedAmenities });
   }, [selectedAmenities]);
