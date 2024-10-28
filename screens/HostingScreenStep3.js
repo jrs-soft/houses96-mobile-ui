@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import axios from 'axios';
 import Colors from '../constants/colors';
 import { HostingContext } from '../context/HostingContext';
+import MessageAlert from '../components/ui/MessageAlert'; // Import MessageAlert
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyBxYF0PbSFXvVuytvVgqxGwy72KQpApsLk';
 
@@ -13,10 +14,15 @@ const HostingScreenStep3 = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [cep, setCep] = useState('');
+  const [latitude, setLatitude] = useState(null); // Track latitude
+  const [longitude, setLongitude] = useState(null); // Track longitude
+  const [alertVisible, setAlertVisible] = useState(false); // Track alert visibility
+  const [alertMessage, setAlertMessage] = useState(''); // Track alert message
+  const [alertMessageType, setAlertMessageType] = useState(''); // Track alert message type
   const { hostingData, setHostingData } = useContext(HostingContext);
 
   useEffect(() => {
-    if (hostingData.address && hostingData.cityName && hostingData.stateName && hostingData.zipCode) {
+    if (hostingData.address && hostingData.cityName && hostingData.stateName && hostingData.zipCode && hostingData.latitude && hostingData.longitude) {
       const addressArr = hostingData.address.split(',');
       const street = addressArr[0];
       const streetNumber = addressArr[1];
@@ -26,12 +32,16 @@ const HostingScreenStep3 = () => {
       setCity(hostingData.cityName);
       setState(hostingData.stateName);
       setCep(hostingData.zipCode);
+      setLatitude(hostingData.latitude); // Set initial latitude
+      setLongitude(hostingData.longitude); // Set initial longitude
     }
-  }, [hostingData.address, hostingData.cityName, hostingData.stateName, hostingData.zipCode]);
+  }, [hostingData]);
 
   const searchAddress = async () => {
     if (!address) {
-      alert('Por favor, insira um endereço');
+      setAlertMessage('Por favor, insira um endereço');
+      setAlertMessageType('warning');
+      setAlertVisible(true);
       return;
     }
 
@@ -66,26 +76,36 @@ const HostingScreenStep3 = () => {
         const updatedState = stateComponent ? stateComponent.long_name : 'Desconhecido';
         const updatedCep = postalCodeComponent ? postalCodeComponent.long_name : 'Desconhecido';
 
+        const updatedLatitude = result.geometry.location.lat;
+        const updatedLongitude = result.geometry.location.lng;
+
         setStreet(updatedStreet);
         setStreetNumber(updatedStreetNumber);
         setCity(updatedCity);
         setState(updatedState);
         setCep(updatedCep);
+        setLatitude(updatedLatitude);
+        setLongitude(updatedLongitude);
 
         setHostingData({ 
           ...hostingData, 
           address: `${updatedStreet}, ${updatedStreetNumber}`, 
           cityName: updatedCity, 
-          stateName: updatedState, 
-          zipCode: updatedCep 
+          stateName: updatedState,
+          zipCode: updatedCep,
+          latitude: updatedLatitude,
+          longitude: updatedLongitude 
         });
-
       } else {
-        alert('Endereço não encontrado');
+        setAlertMessage('Endereço não encontrado');
+        setAlertMessageType('warning');
+        setAlertVisible(true);
       }
     } catch (error) {
       console.error(error);
-      alert('Erro ao pesquisar o endereço');
+      setAlertMessage('Erro ao pesquisar o endereço');
+      setAlertMessageType('error');
+      setAlertVisible(true);
     }
   };
 
@@ -111,7 +131,7 @@ const HostingScreenStep3 = () => {
         <Text style={styles.title}>Confirme seu endereço</Text>
       </View>
 
-      {/* Table for Street, City, and State Inputs */}
+      {/* Table for Street, City, State, and Coordinates */}
       <View style={styles.table}>
         <View style={styles.tableRow}>
           <Text style={styles.label}>Rua: </Text>
@@ -161,7 +181,33 @@ const HostingScreenStep3 = () => {
             placeholder="Digite o CEP"
           />
         </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.label}>Latitude: </Text>
+          <TextInput
+            style={styles.tableInput}
+            value={latitude ? latitude.toString() : ''}
+            editable={false}
+            placeholder="Latitude"
+          />
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.label}>Longitude: </Text>
+          <TextInput
+            style={styles.tableInput}
+            value={longitude ? longitude.toString() : ''}
+            editable={false}
+            placeholder="Longitude"
+          />
+        </View>
       </View>
+
+      {/* MessageAlert Modal */}
+      <MessageAlert
+        visible={alertVisible}
+        message={alertMessage}
+        type={alertMessageType}
+        onClose={() => setAlertVisible(false)}
+      />
     </View>
   );
 };
@@ -186,7 +232,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginRight: 8,
-    width: 65
+    width: 80
   },
   input: {
     flex: 1,

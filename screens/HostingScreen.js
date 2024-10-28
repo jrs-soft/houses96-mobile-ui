@@ -16,12 +16,12 @@ import HostingScreenStep11 from './HostingScreenStep11';
 import HostingScreenStep12 from './HostingScreenStep12';
 import HostingScreenStep13 from './HostingScreenStep13';
 import HostingScreenStep14 from './HostingScreenStep14';
-import MessageAlert from '../components/ui/MessageAlert';
+import MessageAlert from '../components/ui/MessageAlert'; // Import the modal component
 
 const HostingScreen = () => {
   const { hostingData, setHostingData } = useContext(HostingContext);
   const [currentStep, setCurrentStep] = useState(1);
-  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVisible, setAlertVisible] = useState(false); // Track modal visibility
 
   const validateStep = () => {
     switch (currentStep) {
@@ -123,10 +123,10 @@ const HostingScreen = () => {
 
   const handleNextStep = () => {
     if (validateStep()) {
-      setAlertMessage(null); // Clear alert when validation passes
+      setAlertVisible(false); // Hide alert when validation passes
       setCurrentStep(currentStep + 1);
     } else {
-      setAlertMessage("Por favor, preencha ou selecione o(s) campo(s) obrigatório(s)."); // Set alert when validation fails
+      setAlertVisible(true); // Show alert when validation fails
     }
   };
 
@@ -166,34 +166,35 @@ const HostingScreen = () => {
   };
 
   return (
-  
-      <View style={styles.container}>
-        {renderStep()}
+    <View style={styles.container}>
+      {renderStep()}
 
-        {/* Conditionally render the MessageAlert if there's an alertMessage */}
-        {alertMessage && (
-          <MessageAlert type="warning" message={alertMessage} />
+      <View style={styles.buttonContainer}>
+        {currentStep > 1 && (
+          <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep - 1)}>
+            <Text style={styles.buttonText}>Voltar</Text>
+          </TouchableOpacity>
         )}
-
-        <View style={styles.buttonContainer}>
-          {currentStep > 1 && (
-            <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(currentStep - 1)}>
-              <Text style={styles.buttonText}>Voltar</Text>
-            </TouchableOpacity>
-          )}
-          {currentStep < 14 && (
-            <TouchableOpacity style={styles.footerButton} onPress={handleNextStep}>
-              <Text style={styles.buttonText}>Próximo</Text>
-            </TouchableOpacity>
-          )}
-          {currentStep === 14 && (
-            <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
-              <Text style={styles.buttonText}>Vamos começar</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        {currentStep < 14 && (
+          <TouchableOpacity style={styles.footerButton} onPress={handleNextStep}>
+            <Text style={styles.buttonText}>Próximo</Text>
+          </TouchableOpacity>
+        )}
+        {currentStep === 14 && (
+          <TouchableOpacity style={styles.footerButton} onPress={() => setCurrentStep(1)}>
+            <Text style={styles.buttonText}>Vamos começar</Text>
+          </TouchableOpacity>
+        )}
       </View>
- 
+
+      {/* Message Alert Modal */}
+      <MessageAlert
+        visible={alertVisible}
+        message="Por favor, preencha ou selecione o(s) campo(s) obrigatório(s)."
+        type="warning"
+        onClose={() => setAlertVisible(false)} // Close modal on button press
+      />
+    </View>
   );
 };
 
@@ -216,21 +217,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '80%',
     marginBottom: 20,
-    marginTop: 20
+    marginTop: 20,
   },
   footerButton: {
     alignItems: 'center',
+    backgroundColor: Colors.primary500,
+    padding: 10,
+    borderRadius: 15,
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  footerButton: {
-    backgroundColor: Colors.primary500,
-    padding: 10,
-    borderRadius: 15,
   },
 });
 

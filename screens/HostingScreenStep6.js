@@ -3,10 +3,14 @@ import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'rea
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Colors from '../constants/colors';
 import { HostingContext } from '../context/HostingContext';
+import MessageAlert from '../components/ui/MessageAlert'; // Import MessageAlert
 
 const HostingScreenStep6 = () => {
-  const { hostingData, setHostingData } = useContext(HostingContext); // Access context
+  const { hostingData, setHostingData } = useContext(HostingContext);
   const [images, setImages] = useState([]);
+  const [alertVisible, setAlertVisible] = useState(false); // Track alert visibility
+  const [alertMessage, setAlertMessage] = useState(''); // Track alert message
+  const [alertMessageType, setAlertMessageType] = useState(''); // Track alert message type
 
   useEffect(() => {
     if (hostingData.pictures && hostingData.pictures.length > 0) {
@@ -23,15 +27,19 @@ const HostingScreenStep6 = () => {
     launchImageLibrary(
       {
         mediaType: 'photo',
-        selectionLimit: 0, // Allows multiple selection
+        selectionLimit: 0,
         includeBase64: false,
         includeExtra: true,
       },
       (response) => {
         if (response.didCancel) {
-          alert('Seletor de imagens cancelado pelo usuário');
+          setAlertMessage('Seletor de imagens cancelado pelo usuário');
+          setAlertMessageType('warning');
+          setAlertVisible(true);
         } else if (response.errorCode) {
-          alert('Erro no seletor de imagens: ', response.errorMessage);
+          setAlertMessage(`Erro no seletor de imagens: ${response.errorMessage}`);
+          setAlertMessageType('error');
+          setAlertVisible(true);
         } else {
           if (response.assets) {
             const selectedImages = response.assets.map((asset) => ({
@@ -55,9 +63,13 @@ const HostingScreenStep6 = () => {
       },
       (response) => {
         if (response.didCancel) {
-          alert('Câmera cancelada pelo usuário');
+          setAlertMessage('Câmera cancelada pelo usuário');
+          setAlertMessageType('warning');
+          setAlertVisible(true);
         } else if (response.errorCode) {
-          alert('Erro de câmera: ', response.errorMessage);
+          setAlertMessage(`Erro de câmera: ${response.errorMessage}`);
+          setAlertMessageType('error');
+          setAlertVisible(true);
         } else {
           if (response.assets) {
             const capturedImages = response.assets.map((asset) => ({
@@ -75,7 +87,6 @@ const HostingScreenStep6 = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Selecione pelo menos 5 fotos</Text>
       <View style={styles.buttonContainer}>
-
         <TouchableOpacity style={[styles.footerButton, { marginRight: 20 }]} onPress={selectImageFromLibrary}>
           <Text style={styles.buttonText}>Faça upload de uma foto</Text>
         </TouchableOpacity>
@@ -83,13 +94,20 @@ const HostingScreenStep6 = () => {
         <TouchableOpacity style={styles.footerButton} onPress={captureImage}>
           <Text style={styles.buttonText}>Capture uma foto</Text>
         </TouchableOpacity>
-
       </View>
       <ScrollView contentContainerStyle={styles.imageContainer}>
         {images.map((image, index) => (
           <Image key={index} source={{ uri: image.uri }} style={styles.image} />
         ))}
       </ScrollView>
+
+      {/* MessageAlert Modal */}
+      <MessageAlert
+        visible={alertVisible}
+        message={alertMessage}
+        type={alertMessageType}
+        onClose={() => setAlertVisible(false)} // Close modal handler
+      />
     </View>
   );
 };
