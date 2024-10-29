@@ -18,7 +18,6 @@ const HostingScreenStep3 = () => {
   const [longitude, setLongitude] = useState(null); // Track longitude
   const [alertVisible, setAlertVisible] = useState(false); // Track alert visibility
   const [alertMessage, setAlertMessage] = useState(''); // Track alert message
-  const [alertMessageType, setAlertMessageType] = useState(''); // Track alert message type
   const { hostingData, setHostingData } = useContext(HostingContext);
 
   useEffect(() => {
@@ -40,7 +39,6 @@ const HostingScreenStep3 = () => {
   const searchAddress = async () => {
     if (!address) {
       setAlertMessage('Por favor, insira um endereço');
-      setAlertMessageType('warning');
       setAlertVisible(true);
       return;
     }
@@ -98,13 +96,11 @@ const HostingScreenStep3 = () => {
         });
       } else {
         setAlertMessage('Endereço não encontrado');
-        setAlertMessageType('warning');
         setAlertVisible(true);
       }
     } catch (error) {
       console.error(error);
       setAlertMessage('Erro ao pesquisar o endereço');
-      setAlertMessageType('error');
       setAlertVisible(true);
     }
   };
@@ -205,7 +201,6 @@ const HostingScreenStep3 = () => {
       <MessageAlert
         visible={alertVisible}
         message={alertMessage}
-        type={alertMessageType}
         onClose={() => setAlertVisible(false)}
       />
     </View>

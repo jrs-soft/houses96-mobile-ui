@@ -1,24 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 
-const MessageAlert = ({ visible, message, type, onClose }) => {
-  const getBackgroundColor = () => {
-    switch (type) {
-      case 'info':
-        return '#2196F3'; // Blue
-      case 'warning':
-        return '#FFA500'; // Orange
-      case 'error':
-        return '#FF0000'; // Red
-      default:
-        return '#000'; // Default to black
-    }
-  };
-
+const MessageAlert = ({ visible, message, onClose }) => {
   return (
     <Modal transparent={true} visible={visible} animationType="fade">
       <View style={styles.overlay}>
-        <View style={[styles.alertBox, { backgroundColor: getBackgroundColor() }]}>
+        <View style={styles.alertBox}>
           <Text style={styles.alertText}>{message}</Text>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeText}>Fechar</Text>
@@ -39,11 +26,12 @@ const styles = StyleSheet.create({
   alertBox: {
     padding: 20,
     borderRadius: 10,
+    backgroundColor: '#f0f0f0',
     maxWidth: '80%',
     alignItems: 'center',
   },
   alertText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 10,

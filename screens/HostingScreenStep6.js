@@ -10,7 +10,6 @@ const HostingScreenStep6 = () => {
   const [images, setImages] = useState([]);
   const [alertVisible, setAlertVisible] = useState(false); // Track alert visibility
   const [alertMessage, setAlertMessage] = useState(''); // Track alert message
-  const [alertMessageType, setAlertMessageType] = useState(''); // Track alert message type
 
   useEffect(() => {
     if (hostingData.pictures && hostingData.pictures.length > 0) {
@@ -34,11 +33,9 @@ const HostingScreenStep6 = () => {
       (response) => {
         if (response.didCancel) {
           setAlertMessage('Seletor de imagens cancelado pelo usuário');
-          setAlertMessageType('warning');
           setAlertVisible(true);
         } else if (response.errorCode) {
           setAlertMessage(`Erro no seletor de imagens: ${response.errorMessage}`);
-          setAlertMessageType('error');
           setAlertVisible(true);
         } else {
           if (response.assets) {
@@ -64,11 +61,9 @@ const HostingScreenStep6 = () => {
       (response) => {
         if (response.didCancel) {
           setAlertMessage('Câmera cancelada pelo usuário');
-          setAlertMessageType('warning');
           setAlertVisible(true);
         } else if (response.errorCode) {
           setAlertMessage(`Erro de câmera: ${response.errorMessage}`);
-          setAlertMessageType('error');
           setAlertVisible(true);
         } else {
           if (response.assets) {
@@ -105,7 +100,6 @@ const HostingScreenStep6 = () => {
       <MessageAlert
         visible={alertVisible}
         message={alertMessage}
-        type={alertMessageType}
         onClose={() => setAlertVisible(false)} // Close modal handler
       />
     </View>

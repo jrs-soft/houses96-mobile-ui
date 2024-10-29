@@ -15,7 +15,7 @@ const HostingScreenStep7 = () => {
 
   const handleTitle = (value) => {
     setTitle(value);
-    setHostingData({ ...hostingData, title: title});
+    setHostingData({ ...hostingData, title: value });
   };
 
   return (

@@ -106,13 +106,18 @@ const HostingScreen = () => {
 
   const validateStep11 = () => {
 
-    // Step 1: Replace comma with dot
-    const formattedValue = hostingData.pricePerNight.replace(',', '.');
+    if (hostingData.pricePerNight) {
+      // Step 1: Replace comma with dot
+      const formattedValue = hostingData.pricePerNight.replace(',', '.');
 
-    // Step 2: Convert to number
-    const numberValue = parseFloat(formattedValue);
+      // Step 2: Convert to number
+      const numberValue = parseFloat(formattedValue);
 
-    return hostingData.pricePerNight !== null && numberValue > 0;
+      return hostingData.pricePerNight !== null && numberValue > 0;
+    } else {
+      return false;
+    }
+    
   };
 
   const validateStep12 = () => {
@@ -191,7 +196,6 @@ const HostingScreen = () => {
       <MessageAlert
         visible={alertVisible}
         message="Por favor, preencha ou selecione o(s) campo(s) obrigatório(s)."
-        type="warning"
         onClose={() => setAlertVisible(false)} // Close modal on button press
       />
     </View>
