@@ -49,6 +49,7 @@ function AuthenticatedStack() {
         headerStyle: { backgroundColor: Colors.primary500 },
         headerTintColor: 'white',
         contentStyle: { backgroundColor: Colors.primary100 },
+        headerBackTitleVisible: false, // Hide back title globally
       }}
     >
       <Stack.Screen
@@ -65,8 +66,7 @@ function AuthenticatedStack() {
           component={DetailScreen}
           options={{
             headerTitleStyle: {borderWidth: 1},
-            headerTitle: () => <HeaderDetail/>,
-            headerBackTitleVisible: false
+            headerTitle: () => <HeaderDetail/>
           }}
       />
       <Stack.Screen name="Profile" component={ProfileScreen} />

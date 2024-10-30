@@ -296,7 +296,7 @@ const Header = () => {
                 <Text>Perfil</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={navigateToHosting} style={styles.menuItem}>
-                <Text>Imóveis salvos</Text>
+                <Text>Favoritos</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={navigateToHosting} style={styles.menuItem}>
                 <Text>Hospedagem</Text>

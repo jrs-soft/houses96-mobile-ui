@@ -74,17 +74,25 @@ const HostingScreenStep3 = () => {
         const updatedState = stateComponent ? stateComponent.long_name : 'Desconhecido';
         const updatedCep = postalCodeComponent ? postalCodeComponent.long_name : 'Desconhecido';
 
-        const updatedLatitude = result.geometry.location.lat;
-        const updatedLongitude = result.geometry.location.lng;
+        const updatedLatitude = Number(result?.geometry?.location?.lat);
+        const updatedLongitude = Number(result?.geometry?.location?.lng);
+
+        if (Number.isFinite(updatedLatitude) && Number.isFinite(updatedLongitude)) {
+          setLatitude(updatedLatitude);
+          setLongitude(updatedLongitude);
+        } else {
+          setLatitude(0); // Set default safe values
+          setLongitude(0);
+          setAlertMessage('Coordenadas inválidas retornadas.');
+          setAlertVisible(true);
+        }
 
         setStreet(updatedStreet);
         setStreetNumber(updatedStreetNumber);
         setCity(updatedCity);
         setState(updatedState);
         setCep(updatedCep);
-        setLatitude(updatedLatitude);
-        setLongitude(updatedLongitude);
-
+        
         setHostingData({ 
           ...hostingData, 
           address: `${updatedStreet}, ${updatedStreetNumber}`, 
